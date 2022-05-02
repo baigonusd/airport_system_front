@@ -54,11 +54,13 @@ import {
 export const checkAuthenticated = () => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         }; 
+
 
         const body = JSON.stringify({ token: localStorage.getItem('access') });
 
@@ -89,6 +91,7 @@ export const checkAuthenticated = () => async dispatch => {
 
 export const login = (email, password) => async dispatch => {
     const config = {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
@@ -97,14 +100,14 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/login/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config);
 
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
 
-        dispatch(load_user());
+        // dispatch(load_user());
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL

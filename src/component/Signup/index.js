@@ -184,9 +184,9 @@
 // export default connect(null, {signupUser}) (Signup);
 
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signup } from './auth/actions/auth';
+import { signup } from '../../auth/actions/auth';
 import axios from 'axios';
 
 const Signup = ({ signup, isAuthenticated }) => {
@@ -215,10 +215,10 @@ const Signup = ({ signup, isAuthenticated }) => {
     
 
     if (isAuthenticated) {
-        return <Redirect to='/' />
+        return <Navigate to='/' />
     }
     if (accountCreated) {
-        return <Redirect to='/login' />
+        return <Navigate to='/login' />
     }
 
     return (
@@ -285,7 +285,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                 </div>
                 <button className='btn btn-primary' type='submit'>Register</button>
             </form>
-            <
+            
             <p className='mt-3'>
                 Already have an account? <Link to='/login'>Sign In</Link>
             </p>

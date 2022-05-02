@@ -14,10 +14,6 @@ import {
     SIGNUP_FAIL,
     ACTIVATION_SUCCESS,
     ACTIVATION_FAIL,
-    GOOGLE_AUTH_SUCCESS,
-    GOOGLE_AUTH_FAIL,
-    FACEBOOK_AUTH_SUCCESS,
-    FACEBOOK_AUTH_FAIL,
     LOGOUT
 } from '../actions/types';
 
@@ -38,8 +34,8 @@ export default function(state = initialState, action) {
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
-        case GOOGLE_AUTH_SUCCESS:
-        case FACEBOOK_AUTH_SUCCESS:
+        // case GOOGLE_AUTH_SUCCESS:
+        // case FACEBOOK_AUTH_SUCCESS:
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
             return {
