@@ -1,15 +1,17 @@
 import {createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/rootReducer';
+import rootReducer from './reducers';
 
-import {sessionService} from 'redux-react-session';
+//import {sessionService} from 'redux-react-session';
 
 const initialState = {};
 const middlewares = [thunk];
 
-const store = createStore(rootReducer, initialState, compose
-    (applyMiddleware(...middlewares)))
+const store = createStore(
+    rootReducer, 
+    initialState, 
+    compose(applyMiddleware(...middlewares)))
 
-sessionService.initSessionService(store);
+//sessionService.initSessionService(store);
 
 export default store;

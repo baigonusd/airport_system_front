@@ -36,21 +36,19 @@
       
 //       {/* <Icon to="/"> Airport System</Icon> */}
 //       <StyledFormArea>
-//         <StyledTitle color={colors.theme} size={25}> Sign in to your account </StyledTitle>
+//         <StyledTitle color={colors.theme} size={25}> 
+//         Password Reset 
+//         </StyledTitle>
 //         <Formik
 //         initialValues={{
 //           email: userEmail,
-//           password: "",
-//           redirectUrl: 
+//           redirectUrl: "http://localhost:3000/passwordreset"
 //         }}
 //         validationSchema={
 //           Yup.object({
 //             email: Yup.string().email("Invalid email address")
 //             .required("Required"),
-//             password: Yup.string()
-//             .min(8, "Password is too short")
-//             .max(15, "Password is too long")
-//             .required("Required"),
+           
 //           })
 //         }
 
@@ -65,19 +63,12 @@
 //               <TextInput 
 //               name="email"
 //               type="text"
-//               label="Email Address"
+//               label="Enter your Email Address"
 //               placeholder="joe@example.com"
 //               icon={<FiMail/>}
 //               />
 
-//              <TextInput 
-//               name="password"
-//               type="password"
-//               label="Password"
-//               placeholder="********"
-//               icon={<FiLock/>}
-//               />
-
+            
 //               <ButtonGroup>
 //                 <StyledFormButton type="submit">
 //                   Sign In
@@ -89,12 +80,6 @@
 //             </Form>
 //           )}
 //         </Formik>
-//         <ExtraText>
-//           Forgetten password? <TextLink to="/forgottenpassword">Reset it</TextLink>
-//         </ExtraText>
-//         <ExtraText>
-//           New here? <TextLink to="/signup">Signup</TextLink>
-//         </ExtraText>
 //       </StyledFormArea>
       
 //       </StyledContainer>
@@ -105,3 +90,4 @@
 // };
 
 // export default connect(null, {loginUser})(ForgottenPass);
+

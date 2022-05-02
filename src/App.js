@@ -6,6 +6,7 @@ import React from 'react';
 import SigninPage from './pages/signin';
 import SignupPage from './pages/signup';
 import WelcomePage from './pages/WelcomePage';
+import ForgettenPassword from './pages/Forgetten';
 
 
  function App() {
@@ -16,6 +17,7 @@ import WelcomePage from './pages/WelcomePage';
         <Route exact path="/signin" element={ < SigninPage />} />
         <Route exact path="/signup" element={< SignupPage />}/>
         <Route exact path="/welcome" element={<WelcomePage/>}/>
+        <Route exact path="/forgottenpassword" element={<ForgettenPassword/>}>
       </Routes>
       {/* <Home />  */}
       
