@@ -1,6 +1,6 @@
 import axios from 'axios';
 //import {sessionService} from 'redux-react-session';
-import axios from 'axios';
+// import axios from 'axios';
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -18,34 +18,34 @@ import {
     LOGOUT
 } from './types';
 
-export const load_user = () => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
-                'Accept': 'application/json'
-            }
-        }; 
+// export const load_user = () => async dispatch => {
+//     if (localStorage.getItem('access')) {
+//         const config = {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `JWT ${localStorage.getItem('access')}`,
+//                 'Accept': 'application/json'
+//             }
+//         }; 
 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
+//         try {
+//             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
     
-            dispatch({
-                type: USER_LOADED_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: USER_LOADED_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: USER_LOADED_FAIL
-        });
-    }
-};
+//             dispatch({
+//                 type: USER_LOADED_SUCCESS,
+//                 payload: res.data
+//             });
+//         } catch (err) {
+//             dispatch({
+//                 type: USER_LOADED_FAIL
+//             });
+//         }
+//     } else {
+//         dispatch({
+//             type: USER_LOADED_FAIL
+//         });
+//     }
+// };
 
 
 
@@ -122,7 +122,7 @@ export const signup = (first_name, last_name, email, password, re_password) => a
     const body = JSON.stringify({ first_name, last_name, email, password, re_password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,

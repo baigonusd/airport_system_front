@@ -186,7 +186,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signup } from '../actions/auth';
+import { signup } from './auth/actions/auth';
 import axios from 'axios';
 
 const Signup = ({ signup, isAuthenticated }) => {

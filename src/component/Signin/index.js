@@ -107,7 +107,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { login } from './auth/actions/auth';
 import axios from 'axios';
 
 const Login = ({ login, isAuthenticated }) => {
