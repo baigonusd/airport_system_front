@@ -18,34 +18,34 @@ import {
     LOGOUT
 } from './types';
 
-// export const load_user = () => async dispatch => {
-//     if (localStorage.getItem('access')) {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `JWT ${localStorage.getItem('access')}`,
-//                 'Accept': 'application/json'
-//             }
-//         }; 
+export const load_user = () => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage.getItem('access')}`,
+                'Accept': 'application/json'
+            }
+        }; 
 
-//         try {
-//             const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
+        try {
+            const res = await axios.get("http://localhost:8000/api/v1/users/login/", config);
     
-//             dispatch({
-//                 type: USER_LOADED_SUCCESS,
-//                 payload: res.data
-//             });
-//         } catch (err) {
-//             dispatch({
-//                 type: USER_LOADED_FAIL
-//             });
-//         }
-//     } else {
-//         dispatch({
-//             type: USER_LOADED_FAIL
-//         });
-//     }
-// };
+            dispatch({
+                type: USER_LOADED_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: USER_LOADED_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: USER_LOADED_FAIL
+        });
+    }
+};
 
 
 
@@ -100,7 +100,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config);
+        const res = await axios.post(`http://localhost:8000/api/v1/users/login/`, body, config);
 
         dispatch({
             type: LOGIN_SUCCESS,

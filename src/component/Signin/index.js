@@ -107,102 +107,67 @@ import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../auth/actions/auth";
 import axios from "axios";
+import { ReactDOM } from "react";
 
 // const Navigate = useNavigate()
 
+function MyForm() {
+  const [inputs, setInputs] = useState({});
 
-
-const sendData = async (url, data) => {
-  const response = await fetch(url, {
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) {
-    throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response}`);
-  }
-  return await response.json();
-};
-
-const sendUser = () => {
-  const form = document.querySelector(".form-group");
-  const data = {
-    email: "testov.test@mail.ru",
-    password: "123456",
-  };
-//   if(form){
-//       form.addEventListener("submit", (e) => {
-//     e.preventDefault();
-    // const user = JSON.stringify(data);
-    setTimeout(sendData("http://localhost:8000/api/v1/users/login/", data), 2000);
-//   });
-// }
-};
-const Login = ({ login, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    login(email, password);
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  if (isAuthenticated) {
-    return <Navigate to="/" />;
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    sendUser();
+  };
+  const sendData = async (url, data) => {
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response}`);
+    }
+    return await response.json();
+  };
+  const sendUser = () => {
+    const user = JSON.stringify(inputs);
+    sendData("http://localhost:8000/api/v1/users/login/", user);
+  };
 
   return (
-    <div className="container mt-5">
-      <h1>Sign In</h1>
-      <p>Sign into your Account</p>
-      <form className="form-group">
+    <form onSubmit={handleSubmit}>
+      <label>
+        Enter your email:
         <input
-          className="form-control"
           type="email"
-          placeholder="Email"
           name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
+          value={inputs.email || ""}
+          onChange={handleChange}
           required
         />
-
+      </label>
+      <label>
+        Enter your password:
         <input
-          className="form-control"
           type="password"
-          placeholder="Password"
           name="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-          minLength="6"
+          value={inputs.password || ""}
+          onChange={handleChange}
+          minLength='6'
           required
         />
-
-        <button className="btn btn-primary" type="submit">
-          Login
-        </button>
-      </form>
-
-      <p className="mt-3">
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
-      <p className="mt-3">
-        Forgot your Password? <Link to="/reset-password">Reset Password</Link>
-      </p>
-    </div>
+      </label>
+      <input type="submit" />
+    </form>
   );
-};
-sendUser();
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});  
-export default connect(mapStateToProps, { login })(Login);
+}
+
+export default MyForm;
