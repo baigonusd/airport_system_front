@@ -1,14 +1,14 @@
 import React from 'react';
 import { 
+    StyledTitle,
     StyledFormArea, 
-    StyledFormButton, 
-    StyledTitle, 
+    StyledFormButton,  
     colors, 
     StyledContainer, ButtonGroup, ExtraText, TextLink, StyledButton
   } from '../component/Styles';
 
 
-
+//BAGGAGE PAGE WELCOME PAGE UBRAT'
 const WelcomePage = () => {
   return (
     <div> 
@@ -23,15 +23,15 @@ const WelcomePage = () => {
             display: "flex",
             justifyContent: "flex-start",
         }}></div>
-      <StyledContainer>
-      <StyledFormArea color='red'>
-        <StyledTitle size={25}> WELCOME USER </StyledTitle>
+
+        <StyledFormArea bg={colors.dark2}>
+        <StyledTitle size={65}> WELCOME USER </StyledTitle>
         <ButtonGroup>
             <StyledButton to="#">Logout</StyledButton>
         </ButtonGroup>
-        
         </StyledFormArea>
-        </StyledContainer>
+        
+        
       
       
     </div>

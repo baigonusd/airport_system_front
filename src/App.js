@@ -2,25 +2,37 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import SigninPage from './pages/signin';
 import SignupPage from './pages/signup';
 import WelcomePage from './pages/WelcomePage';
+import ResetPasswordPage from './pages/ResetPassword';
+import ResetPasswordConfirmPage from './pages/ResetPasswordConfirm';
+import VerifyCodePage from './pages/VerifyCode';
+
+import {Provider} from 'react-redux';
+import store from './store';
 
 
- function App() {
+
+ function App() { 
   return (
-    <Router>
+    <Provider store={store}>
+      <Router>
       <Routes>
         <Route exact path="/" element={ < Home />} />
         <Route exact path="/signin" element={ < SigninPage />} />
         <Route exact path="/signup" element={< SignupPage />}/>
         <Route exact path="/welcome" element={<WelcomePage/>}/>
-       
-      </Routes>
+        <Route exact path="/reset-password" element={<ResetPasswordPage/>}/>
+        <Route exact path="/reset-password-confirm" element={<ResetPasswordConfirmPage/>}/>
+        <Route exact path="/verify-code" element={<VerifyCodePage/>}/>
+      </Routes> 
       {/* <Home />  */}
       
     </Router>
+    </Provider>
   );
 };
 
