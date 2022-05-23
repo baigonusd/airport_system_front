@@ -4,7 +4,8 @@ import {
     StyledTextInput,
     StyledLabel,
     StyledIcon,
-    ErrorMsg
+    ErrorMsg,
+    RadioButtonLabel
 } from './Styles';
 
 import {FiEyeOff, FiEye} from 'react-icons/fi';
@@ -22,7 +23,12 @@ export const TextInput = ({ icon, ...props }) => {
             {...field} 
             {...props}
             />)}
-            
+
+            {/* ?<RadioButtonLabel  */}
+
+
+
+
 
             {props.type === "password" &&(
                 <StyledTextInput
@@ -33,13 +39,13 @@ export const TextInput = ({ icon, ...props }) => {
                 />
             )}
             <StyledIcon> {icon} </StyledIcon>
-            {
+            {/* {
                 props.type === "password" && (
                 <StyledIcon onClick={() => setshow(!show)} right>
                    {show && <FiEye/>} 
                    {!show && <FiEyeOff/>} 
                 </StyledIcon>
-            )}
+            )} */}
 
             {meta.touched && meta.error ?(
                 <ErrorMsg>{meta.error}</ErrorMsg>
