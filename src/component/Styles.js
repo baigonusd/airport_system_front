@@ -186,6 +186,7 @@ top: 35px;
 ${(props) => props.right && `right: 15px;`}
 ${(props) => !props.right && `left: 15px;`}
 `
+<<<<<<< HEAD
 export const RadioButtonLabel = styled.label`
   position: absolute;
   top: 25%;
@@ -235,3 +236,5 @@ export const RadioButton = styled.input`
     }
   `}
 `;
+=======
+>>>>>>> 4ad0a59a0f0088dd73f02de73ea2a719e218e8a2

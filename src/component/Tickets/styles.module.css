@@ -1,0 +1,39 @@
+.container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: content-box;
+    margin-bottom: 21px;
+    margin-top: 21px;
+}
+  .price {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    color: #2196f3;
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+    
+  }
+  .item {
+    justify-content: space-between;
+    margin-right: 60px;
+    
+  }
+  .item h3 {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #a0b0b9;
+  }
+  .item span {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #4a4a4a;
+  }
+  
