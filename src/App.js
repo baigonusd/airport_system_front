@@ -7,6 +7,7 @@ import SigninPage from './pages/signin';
 import SignupPage from './pages/signup';
 import WelcomePage from './pages/WelcomePage';
 import BaggagePage from './pages/BaggagePage';
+import SearchPage from './pages/SearchPage';
 
 
  function App() {
@@ -18,6 +19,7 @@ import BaggagePage from './pages/BaggagePage';
         <Route exact path="/signup" element={< SignupPage />}/>
         <Route exact path="/welcome" element={<WelcomePage/>}/>
         <Route exact path="/baggage" element={<BaggagePage/>}/>
+        <Route exact path="/search" element={<SearchPage/>}/>
       </Routes>
       {/* <Home />  */}
       
