@@ -1,42 +1,21 @@
-import React from 'react';
-import { 
-    StyledFormArea, 
-    StyledFormButton, 
-    StyledTitle, 
-    colors, 
-    StyledContainer, ButtonGroup, ExtraText, TextLink, StyledButton
-  } from '../component/Styles';
+import { StrictMode } from "react";
+import React from 'react'
+import Logo from "../component/Icons/Logo";
+import List from "../component/List";
+import data from "../data";
+import "../styles.css";
 
 
-
-const WelcomePage = () => {
+export default function WelcomePage() {
   return (
-    <div> 
-        <div 
-        style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            backgroundColor: "transparent",
-            width: "100%",
-            padding: "15px",
-            display: "flex",
-            justifyContent: "flex-start",
-        }}></div>
-      <StyledContainer>
-      <StyledFormArea color='red'>
-        <StyledTitle size={25}> WELCOME USER </StyledTitle>
-        <ButtonGroup>
-            <StyledButton to="#">Logout</StyledButton>
-        </ButtonGroup>
-        
-        </StyledFormArea>
-        </StyledContainer>
-      
-      
-    </div>
-    
-  )
-}
-
-export default WelcomePage
+      <StrictMode>
+        <div className="page">
+          <Logo />
+          <main>
+            <List tickets={data} />
+          </main>
+        </div>
+      </StrictMode>
+    )
+  };
+  

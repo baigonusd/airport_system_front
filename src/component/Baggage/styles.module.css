@@ -1,0 +1,36 @@
+.container {
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  margin-right: 21px;
+  margin-bottom: 21px;
+  margin-top: 21px;
+  box-sizing: content-box;
+  color: #4a4a4a;
+    
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  
+}
+.item {
+  justify-content: space-between;
+  margin: 21px;
+}
+.item h3 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #a0b0b9;
+}
+.item span {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: #4a4a4a;
+}
