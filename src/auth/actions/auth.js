@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -8,12 +9,17 @@ import {
     ACTIVATION_SUCCESS,
     //AUTHENTICATED_SUCCESS,
     //AUTHENTICATED_FAIL,
+    TICKET_FAIL,
+    TICKET_SUCCESS,
     SIGNUP_SUCCESS,
     SIGNUP_FAIL,
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_CONFIRM_FAIL,
+    BAGGAGE_FAIL,
+    BAGGAGE_SUCCESS,
+    SELECT_TICKET,
     LOGOUT
 } from './types';
 
@@ -59,17 +65,16 @@ import {
 
 // };
 
-export const signup = (first_name, last_name, email, iin, phoneNumber, docNumber, password, re_password) => async dispatch => {
+export const signup = (name, surname, email, iin, mobile_phone, number_of_doc, password) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
-
-    const body = JSON.stringify({ first_name, last_name, email, iin, phoneNumber, docNumber, password, re_password });
+    const body = JSON.stringify({ name, surname, email, iin, mobile_phone, number_of_doc, password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/signup/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -83,17 +88,18 @@ export const signup = (first_name, last_name, email, iin, phoneNumber, docNumber
 };
 
 export const load_user = () => async dispatch => {
-    if (localStorage.getItem('access')){
+    if (localStorage.getItem('token')){
         const config ={
             hadders: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
+                'Authorization': `JWT ${localStorage.getItem('token')}`,
                 'Accept': 'application/json'
             }
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/ap1/v1/users/`, config );
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/users/`, config );
+            /// api/v1/track/ticket/
             dispatch({
                 type: USER_LOADED_SUCCESS,
                 payload: res.data
@@ -121,7 +127,8 @@ export const login = (email, phoneNumber, password) => async dispatch => {
     const body = JSON.stringify({email, phoneNumber, password});
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/signin`, body, config );
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config );
+
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -134,6 +141,7 @@ export const login = (email, phoneNumber, password) => async dispatch => {
 
     }
 };
+
 
 export const verify = (uid, token) => async dispatch => {
     const config = {
@@ -153,6 +161,46 @@ export const verify = (uid, token) => async dispatch => {
     } catch (err) {
         dispatch({
             type: ACTIVATION_FAIL
+        })
+    }
+};
+
+export const getTicket = (token) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/ticket/`, config);
+        dispatch({
+            type: TICKET_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: TICKET_FAIL
+        })
+    }
+};
+
+export const getBaggage = (token) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/`, config);
+        dispatch({
+            type: BAGGAGE_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: BAGGAGE_FAIL
         })
     }
 };

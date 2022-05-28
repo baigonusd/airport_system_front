@@ -15,7 +15,7 @@ import {
 import {connect} from 'react-redux';
 import {signup} from "./../../auth/actions/auth";
 import {Navigate} from "react-router-dom";
-import { useState } from 'react';
+import {useState} from 'react';
 
 
 
@@ -24,25 +24,27 @@ const Signup = ({ signup, isAuthenticated }) => {
   
   const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        name: '',
+        surname: '',
         email: '',
         iin: '',
-        phoneNumber: '',
-        docNumber: '',
+        mobile_phone: '',
+        number_of_doc: '',
         password: '',
-        re_password: ''
+        re_password: '',
+        role: '4',
+        gender: '1'
     });
 
     const { 
-      first_name, 
-      last_name, 
+      name, 
+      surname, 
       email, 
       iin, 
-      phoneNumber, 
-      docNumber, 
+      mobile_phone, 
+      number_of_doc, 
       password, 
-      re_password } = formData;
+      re_password} = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -50,7 +52,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(first_name, last_name, email, iin, phoneNumber, docNumber, password, re_password);
+            signup(name, surname, email, iin, mobile_phone, number_of_doc, password, re_password);
             setAccountCreated(true);
         }
     };
@@ -85,16 +87,16 @@ const Signup = ({ signup, isAuthenticated }) => {
              <StyledTextInput 
               type='text'
               placeholder='First Name'
-              name='first_name'
-              value={first_name}
+              name='name'
+              value={name}
               onChange={e => onChange(e)}
               required
               />
               <StyledTextInput 
               type='text'
               placeholder='Last Name'
-              name='last_name'
-              value={last_name}
+              name='surname'
+              value={surname}
               onChange={e => onChange(e)}
               required
               />
@@ -107,37 +109,36 @@ const Signup = ({ signup, isAuthenticated }) => {
               required
               />
               <StyledTextInput 
-              type='number'
+              type='text'
               pattern="[0-9]*"
               placeholder='iin'
-              name='IIN'
+              name='iin'
               value={iin}
-              maxLength="11"
+              size="11"
               onChange={e => onChange(e)}
               required
               />
               <StyledTextInput 
-              type='number'
+              type='text'
               pattern="[0-9]*"
               placeholder='Doc Number'
-              name='docNumber'
-              value={docNumber}
+              name='number_of_doc'
+              value={number_of_doc}
               maxLength="12"
               onChange={e => onChange(e)}
               required
               />
               <StyledTextInput 
-              type='number'
-              pattern="[0-9]*"
+              type='text'
+              pattern="[0-9+]*"
               placeholder='Phone Number'
-              name='phoneNumber'
-              value={phoneNumber}
+              name='mobile_phone'
+              value={mobile_phone}
               maxLength="12"
               onChange={e => onChange(e)}
               required
               />
-              
-              
+
              <StyledTextInput 
               type='password'
               placeholder='Password*'
@@ -156,10 +157,7 @@ const Signup = ({ signup, isAuthenticated }) => {
               onChange={e => onChange(e)}
               minLength='8'
               required
-              
               />
-
-            
 
               <ButtonGroup>
                 <StyledFormButton type="submit">

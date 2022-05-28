@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { 
@@ -16,7 +16,6 @@ import {
 
 import {login} from './../../auth/actions/auth';
 
-
 const Login = ({login,  isAuthenticated }) => {
   const [formData, setFromData] = useState({
     email: '',
@@ -27,20 +26,34 @@ const Login = ({login,  isAuthenticated }) => {
   const {email, phoneNumber, password} = formData;
 
   //const [errors, setErrors] = useState({});
-
+  const [isOpen, setOpen] = useState(null);
   const onChange = e => setFromData({
     ...formData,
     [e.target.name]: e.target.value
   });
 
-  const onSubmit = e =>{
+const onSubmit = e =>{
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // };
+  // try {
+  //   const[token, setToken] = useState(null);
+  //   useEffect(() => {
+  //     localStorage.setItem(token, res.data.token);
+  //   }, [res.dats.token, token]);
+  //   const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config );
+  // } catch (err) {
+  //   console.log(err)
+  // }
     e.preventDefault();
     login(email, phoneNumber, password)
   };
 
   if (isAuthenticated) {
-    return <Navigate to='/' />
-}
+    return <Navigate to='/welcome' />
+  }
   return (
     <div> 
       <StyledContainer>
@@ -116,7 +129,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, {login})(Login);
 // export default connect(null,{login} ) (Login);
 
 
