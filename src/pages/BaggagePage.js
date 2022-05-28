@@ -7,29 +7,26 @@ import {connect} from 'react-redux';
 import baggage_data from "../baggage_data";
 import "../styles.css";
 
-const WelcomePage = ({getBaggage,isAuthenticated}) => {
-  if (isAuthenticated) {
-    const token = window.localStorage.getItem("token");
-    getBaggage(token)
-    const baggage_data = JSON.parse(window.localStorage.getItem("baggages"));
-    const selected_ticket = JSON.parse(window.localStorage.getItem("selected_ticket"));
-    return (
-          <div className="page">
-            <main>
-            {baggage_data.map((baggage) => (
-              <Baggage
-                id={baggage.id}
-                weight={baggage.weight}
-                bag_status={baggage.status}
-              />
-            ))}
-            </main>
-          </div>
-      )
-  }
+const BaggagePage = ({getBaggage, access, baggages}) => {
+  getBaggage(access)
+  const baggage_data = JSON.parse(baggages);
+  return (
+        <div className="page">
+          <main>
+          {baggage_data.map((baggage) => (
+            <Baggage
+              id={baggage.id}
+              weight={baggage.weight}
+              bag_status={baggage.status}
+            />
+          ))}
+          </main>
+        </div>
+  )
 };
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  access: state.auth.access,
+  baggages: state.auth.baggages
 });
 
-export default connect(mapStateToProps, {getBaggage})(WelcomePage);
+export default connect(mapStateToProps, {getBaggage})(BaggagePage);

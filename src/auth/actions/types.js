@@ -17,4 +17,5 @@ export const TICKET_SUCCESS = 'TICKET_SUCCESS';
 export const TICKET_FAIL = 'TICKET_FAIL';
 export const BAGGAGE_SUCCESS = 'BAGGAGE_SUCCESS';
 export const BAGGAGE_FAIL = 'BAGGAGE_FAIL';
-export const SELECT_TICKET = 'SELECT_TICKET';
+export const SELECT_SUCCESS = 'SELECT_SUCCESS';
+export const SELECT_FAIL = 'SELECT_FAIL';

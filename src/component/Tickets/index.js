@@ -29,11 +29,9 @@ export const Ticket = ({ticket}) => {
           <h3>Status</h3>
           <span>{ticket.status}</span>
         </div>
-        <ButtonGroup>
-          <StyledFormButton type="submit">
-            Sign In
-          </StyledFormButton>
-        </ButtonGroup>
+        <NavBtn>
+          <NavBtnLink to='/baggage'>More</NavBtnLink>
+        </NavBtn>
       </div>
     </section>
   );

@@ -19,7 +19,8 @@ import {
     PASSWORD_RESET_CONFIRM_FAIL,
     BAGGAGE_FAIL,
     BAGGAGE_SUCCESS,
-    SELECT_TICKET,
+    SELECT_SUCCESS,
+    SELECT_FAIL,
     LOGOUT
 } from './types';
 
@@ -74,11 +75,11 @@ export const signup = (name, surname, email, iin, mobile_phone, number_of_doc, p
     const body = JSON.stringify({ name, surname, email, iin, mobile_phone, number_of_doc, password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
+        // const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
-            payload: res.data
+            payload: body
         });
     } catch (err) {
         dispatch({
@@ -143,17 +144,17 @@ export const login = (email, phoneNumber, password) => async dispatch => {
 };
 
 
-export const verify = (uid, token) => async dispatch => {
+export const verify = (mobile_phone, code) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
-    const body = JSON.stringify({ uid, token });
+    const body = JSON.stringify({ code, mobile_phone });
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/activate/`, body, config);
 
         dispatch({
             type: ACTIVATION_SUCCESS,
@@ -184,7 +185,30 @@ export const getTicket = (token) => async dispatch => {
         })
     }
 };
-
+export const selectTicket = (token, ticket) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    };
+    const body = JSON.stringify({ticket});
+    try {
+        const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
+        const baggages = [];
+        for (let i = 0; i < own_tickets.data.baggages.length; i++) {
+            const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${own_tickets.data.baggages[i]}`, body, config);
+            baggages.push(baggage_info);
+        }
+        dispatch({
+            type: SELECT_SUCCESS,
+            payload: JSON.stringify(baggages)
+        });
+    } catch (err) {
+        dispatch({
+            type: SELECT_FAIL
+        })
+    }
+};
 export const getBaggage = (token) => async dispatch => {
     const config = {
         headers: {

@@ -66,12 +66,12 @@ const Signup = ({ signup, isAuthenticated }) => {
  
 
 
-  if (isAuthenticated) {
-        return <Navigate to='/' />
-  };
+  // if (isAuthenticated) {
+  //       return <Navigate to='/' />
+  // };
 
   if (accountCreated) {
-        return <Navigate to='/signin' />
+    return <Navigate to='/verify-code' />
   };
 
   return (

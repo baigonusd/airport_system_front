@@ -16,7 +16,8 @@ PASSWORD_RESET_CONFIRM_FAIL,
 TICKET_FAIL,
 TICKET_SUCCESS,
 BAGGAGE_FAIL,
-SELECT_TICKET,
+SELECT_SUCCESS,
+SELECT_FAIL,
 BAGGAGE_SUCCESS
 } from '../actions/types';
 
@@ -25,6 +26,8 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     tickets: localStorage.getItem('tickets'),
+    baggages: localStorage.getItem('baggages'),
+    form: localStorage.getItem('form'),
     user: null
 };
 
@@ -52,9 +55,11 @@ export default function (state = initialState, action){
                 refresh: payload.refresh
             }
         case SIGNUP_SUCCESS:
+            localStorage.setItem('form', JSON.stringify(payload))
                 return {
                     ...state,
-                    isAuthenticated: false
+                    isAuthenticated: false,
+                    form: payload
                 }
         case USER_LOADED_SUCCESS:
             return{
@@ -100,15 +105,24 @@ export default function (state = initialState, action){
                 tickets: JSON.stringify(payload),
                 refresh: payload.refresh
             }
-            
+        case SELECT_SUCCESS:
+                console.log(payload)
+                localStorage.setItem('baggages', JSON.stringify(payload))
+                return{
+                    ...state,
+                    baggages: JSON.stringify(payload),
+                    refresh: payload.refresh
+                }
         case BAGGAGE_SUCCESS:
             localStorage.setItem('baggages', JSON.stringify(payload));
             return{
                 ...state,
-                isAuthenticated: true
+                baggages: JSON.stringify(payload),
+                refresh: payload.refresh
             }
         case BAGGAGE_FAIL:
         case TICKET_FAIL:
+        case SELECT_FAIL:
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:

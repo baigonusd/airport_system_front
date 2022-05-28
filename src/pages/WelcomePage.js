@@ -3,6 +3,7 @@ import React from 'react'
 import Logo from "../component/Icons/Logo";
 import List from "../component/List";
 import "../styles.css";
+import {Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getTicket} from '../auth/actions/auth';
 import data from "../data";
@@ -24,6 +25,8 @@ const WelcomePage = ({getTicket,isAuthenticated, access, tickets}) => {
           </div>
         </StrictMode>
     )
+  }else{
+    return <Navigate to='/signin' />
   }
 };
 const mapStateToProps = state => ({

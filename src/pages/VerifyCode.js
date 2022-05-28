@@ -9,7 +9,8 @@ import {
 } from '../component/Styles'
 import styled from "styled-components";
 import ReactInputVerificationCode from "react-input-verification-code";
-
+import {verify} from "./../auth/actions/auth";
+import { useNavigate } from "react-router-dom";
 
 export const StyledSeconds = styled.div`
   margin-top: 20px;
@@ -66,12 +67,13 @@ const StyledReactInputVerificationCode = styled.div`
   }
 `;
 
-const VerifyCode = () => {
+const VerifyCode = ({verify, form}) => {
     const [value, setValue] = useState("");
     const [isInvalid, setIsInvalid] = useState(false);
     const [error, setError] = useState(null);
   
     const [seconds, setSeconds] = useState(null);
+    let navigate = useNavigate();
     return (
         <div>
             <StyledContainer>
@@ -82,7 +84,7 @@ const VerifyCode = () => {
                         <ReactInputVerificationCode
                             value={value}
                             placeholder={null}
-                            length={5}
+                            length={4}
                             onChange={(newValue) => {
                                 setValue(newValue);
 
@@ -102,28 +104,9 @@ const VerifyCode = () => {
                     <StyledButton
                     
                         onClick={() => {
-                            setValue("");
-                            setError("Incorrect code. Please try again");
-                            setIsInvalid(true);
-                            setSeconds(60);
-
-                            let mySeconds = 60;
-
-                            // TODO Clear previos interval
-
-                            const intervalId = setInterval(() => {
-                                mySeconds = mySeconds - 1;
-                                setSeconds(mySeconds);
-
-                                if (mySeconds === 0) {
-                                    clearInterval(intervalId);
-                                    setSeconds(null);
-                                }
-                            }, 1000);
-
-                            setTimeout(() => {
-                                setIsInvalid(false);
-                            }, 1000);
+                            var obj = JSON.parse(form);
+                            verify(obj.mobile_phone, value)
+                            navigate("/signin");
                         }}
                     >
                         Send
@@ -139,7 +122,12 @@ const VerifyCode = () => {
 
 };
 
-export default VerifyCode;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    form: state.auth.form
+  });
+  
+  export default connect(mapStateToProps, {verify})(VerifyCode);
 
 
 
