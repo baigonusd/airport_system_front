@@ -235,3 +235,32 @@ export const RadioButton = styled.input`
     }
   `}
 `;
+
+export const StyledSeconds = styled.div`
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.002em;
+  color: rgba(255, 255, 255, 0.4);
+  color: #000000;
+`;
+
+export const StyledError = styled.div`
+  margin-top: 13px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.004em;
+  color: #000000;
+`;
+
+export const StyledButtonAct = styled.button`
+  margin-top: 20px;
+  background: #36c6d9;
+  border-radius: 24px;
+  border: none;
+  outline: none;
+  width: 312px;
+  height: 48px;
+`;

@@ -130,4 +130,3 @@ const mapStateToProps = state => ({
   export default connect(mapStateToProps, {verify})(VerifyCode);
 
 
-

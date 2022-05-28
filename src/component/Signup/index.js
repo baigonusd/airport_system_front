@@ -1,12 +1,12 @@
 import React from 'react';
-import {  
-  StyledFormArea, 
-  StyledFormButton, 
-  StyledTitle, 
-  colors, 
-  StyledContainer, 
-  ButtonGroup, 
-  ExtraText, 
+import {
+  StyledFormArea,
+  StyledFormButton,
+  StyledTitle,
+  colors,
+  StyledContainer,
+  ButtonGroup,
+  ExtraText,
   TextLink,
   StyledTextInput
 } from '../Styles';
@@ -17,11 +17,12 @@ import {signup} from "./../../auth/actions/auth";
 import {Navigate} from "react-router-dom";
 import {useState} from 'react';
 
-
-
-
 const Signup = ({ signup, isAuthenticated }) => {
-  
+  // const [select, setSelect] = useState("betterPriceOnly");
+  // const handleSelectChange = (event) => {
+  //   const value = event.target.value;
+  //   setSelect(value);
+  // };
   const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -65,6 +66,11 @@ const Signup = ({ signup, isAuthenticated }) => {
 
  
 
+  // const handleChangeInput = (e) => {
+  //   const re = /^[0-9\b]+$/; //rules
+  //   if (e.target.value === "" || re.test(e.target.value)) {
+  //     setPhoneNumber(e.target.value);
+  //   }
 
   // if (isAuthenticated) {
   //       return <Navigate to='/' />
@@ -100,13 +106,13 @@ const Signup = ({ signup, isAuthenticated }) => {
               onChange={e => onChange(e)}
               required
               />
-              <StyledTextInput 
-              type='email'
-              placeholder='Email*'
-              name='email'
-              value={email}
-              onChange={e => onChange(e)}
-              required
+              <StyledTextInput
+                type='email'
+                placeholder='Email'
+                name='email'
+                value={email}
+                onChange={e => onChange(e)}
+                required
               />
               <StyledTextInput 
               type='text'
@@ -164,16 +170,16 @@ const Signup = ({ signup, isAuthenticated }) => {
                   Sign Up
                 </StyledFormButton>
               </ButtonGroup>
-        </form>
-        <ExtraText>
-          Already nave an account? <TextLink to="/signin">Sign In</TextLink>
-        </ExtraText>
-      </StyledFormArea>
-      
-      </StyledContainer>
-    </div>
+            </form>
+            <ExtraText>
+              Already nave an account? <TextLink to="/signin">Sign In</TextLink>
+            </ExtraText>
+          </StyledFormArea>
+
+        </StyledContainer>
+      </div>
     </>
-    
+
   );
 };
 
@@ -181,7 +187,7 @@ const Signup = ({ signup, isAuthenticated }) => {
 
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { signup })(Signup);

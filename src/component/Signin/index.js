@@ -12,7 +12,7 @@ import {
   TextLink,
   StyledTextInput
 } from '../Styles';
-//import PhoneInput from 'react-phone-input-2'
+
 
 import {login} from './../../auth/actions/auth';
 
@@ -71,26 +71,6 @@ const onSubmit = e =>{
               onChange={ e => onChange(e)}
               required
               />
-
-              {/* <PhoneInput
-               placeholder="Enter phone number"
-               specialLabel={''}
-               country={'kz'}
-               inputStyle={{
-                 borderColor: (props.touched && props.error) && "red"
-               }}
-               {...props}
-               />
-               {(props.touched && props.error) && <p style={{color:'red'}} >{props.error}</p> } */}
-           
-              {/* name="phoneNumber"
-              type="phone"
-              label="Phone number"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={ e => onChange(e)}
-              required
-              /> */}
               
               <StyledTextInput 
               name="password"
