@@ -1,44 +1,19 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { verify } from '../auth/actions/auth';
 import {
     StyledFormArea,
     StyledTitle,
     colors,
-    StyledContainer
+    StyledContainer,
+    StyledError,
+    StyledSeconds,
+    StyledButtonAct
 } from '../component/Styles'
 import styled from "styled-components";
 import ReactInputVerificationCode from "react-input-verification-code";
 
-
-export const StyledSeconds = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.002em;
-  color: rgba(255, 255, 255, 0.4);
-  color: #000000;
-`;
-
-const StyledError = styled.div`
-  margin-top: 13px;
-  font-size: 12px;
-  line-height: 16px;
-  text-align: center;
-  letter-spacing: 0.004em;
-  color: #000000;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 20px;
-  background: #36c6d9;
-  border-radius: 24px;
-  border: none;
-  outline: none;
-  width: 312px;
-  height: 48px;
-`;
 
 const StyledReactInputVerificationCode = styled.div`
   display: flex;
@@ -66,12 +41,26 @@ const StyledReactInputVerificationCode = styled.div`
   }
 `;
 
-const VerifyCode = () => {
+const VerifyCode = ({verify, match }) => {
     const [value, setValue] = useState("");
     const [isInvalid, setIsInvalid] = useState(false);
     const [error, setError] = useState(null);
+    const [verified, setVerified] = useState(false);
+    const verify_account = e => {
+        const uid = match.params.uid;
+        const token = match.params.token;
+        verify(uid, token);
+        setVerified(true);
+    };
+
+    if (verified) {
+        return <Navigate to='/' />
+    }
+
+
+    
   
-    const [seconds, setSeconds] = useState(null);
+    //const [seconds, setSeconds] = useState(null);
     return (
         <div>
             <StyledContainer>
@@ -82,7 +71,7 @@ const VerifyCode = () => {
                         <ReactInputVerificationCode
                             value={value}
                             placeholder={null}
-                            length={5}
+                            length={4}
                             onChange={(newValue) => {
                                 setValue(newValue);
 
@@ -92,42 +81,44 @@ const VerifyCode = () => {
                             }}
                         />
                     </StyledReactInputVerificationCode>
+                    
 
                     {error && <StyledError>{error}</StyledError>}
 
-                    {seconds && (
+                    {/* {seconds && (
                         <StyledSeconds>{`Verification code has been re-sent (${seconds}s)`}</StyledSeconds>
-                    )}
+                    )}  */}
 
-                    <StyledButton
+                    <StyledButtonAct
+                        onClick={verify_account}
                     
-                        onClick={() => {
-                            setValue("");
-                            setError("Incorrect code. Please try again");
-                            setIsInvalid(true);
-                            setSeconds(60);
+                        // onClick={() => {
+                        //     setValue("");
+                        //     setError("Incorrect code. Please try again");
+                        //     setIsInvalid(true);
+                        //     setSeconds(60);
 
-                            let mySeconds = 60;
+                        //     let mySeconds = 60;
 
-                            // TODO Clear previos interval
+                        //     // TODO Clear previos interval
 
-                            const intervalId = setInterval(() => {
-                                mySeconds = mySeconds - 1;
-                                setSeconds(mySeconds);
+                        //     const intervalId = setInterval(() => {
+                        //         mySeconds = mySeconds - 1;
+                        //         setSeconds(mySeconds);
 
-                                if (mySeconds === 0) {
-                                    clearInterval(intervalId);
-                                    setSeconds(null);
-                                }
-                            }, 1000);
+                        //         if (mySeconds === 0) {
+                        //             clearInterval(intervalId);
+                        //             setSeconds(null);
+                        //         }
+                        //     }, 1000);
 
-                            setTimeout(() => {
-                                setIsInvalid(false);
-                            }, 1000);
-                        }}
+                        //     setTimeout(() => {
+                        //         setIsInvalid(false);
+                        //     }, 1000);
+                        // }}
                     >
                         Send
-                    </StyledButton>
+                    </StyledButtonAct>
                 
 
                 </StyledFormArea>
@@ -139,7 +130,8 @@ const VerifyCode = () => {
 
 };
 
-export default VerifyCode;
+export default connect(null, { verify })(VerifyCode);
+
 
 
 

@@ -1,18 +1,16 @@
-import { useField } from "formik";
+
 import { useState } from "react";
 import {
     StyledTextInput,
     StyledLabel,
-    StyledIcon,
-    ErrorMsg,
-    RadioButtonLabel
+    ErrorMsg
 } from './Styles';
 
-import {FiEyeOff, FiEye} from 'react-icons/fi';
+//import {FiEyeOff, FiEye} from 'react-icons/fi';
 
 export const TextInput = ({ icon, ...props }) => {
-    const [field, meta] = useField(props);
-    const [show, setshow] = useState(false);
+    const [field, meta] = useState(props);
+    //const [show, setshow] = useState(false);
 
     return (
         <div style={{ position: "relative" }}>
@@ -30,7 +28,7 @@ export const TextInput = ({ icon, ...props }) => {
 
 
 
-            {props.type === "password" &&(
+            {/* {props.type === "password" &&(
                 <StyledTextInput
                 invalid={meta.touched && meta.error}
                 {...field} 
@@ -38,7 +36,7 @@ export const TextInput = ({ icon, ...props }) => {
                 type={show ? "text" : "password"}
                 />
             )}
-            <StyledIcon> {icon} </StyledIcon>
+            <StyledIcon> {icon} </StyledIcon> */}
             {/* {
                 props.type === "password" && (
                 <StyledIcon onClick={() => setshow(!show)} right>

@@ -59,17 +59,17 @@ import {
 
 // };
 
-export const signup = (first_name, last_name, email, iin, phoneNumber, docNumber, password, re_password) => async dispatch => {
+export const signup = (name, surname, email, mobile_phone, number_of_doc, iin, gender, password, re_password) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
-    const body = JSON.stringify({ first_name, last_name, email, iin, phoneNumber, docNumber, password, re_password });
+    const body = JSON.stringify({ name, surname, email, mobile_phone, number_of_doc, iin, gender, password, re_password });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/signup/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -121,7 +121,7 @@ export const login = (email, phoneNumber, password) => async dispatch => {
     const body = JSON.stringify({email, phoneNumber, password});
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/signin`, body, config );
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config );
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -145,7 +145,7 @@ export const verify = (uid, token) => async dispatch => {
     const body = JSON.stringify({ uid, token });
 
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/activate/`, body, config);
 
         dispatch({
             type: ACTIVATION_SUCCESS,
@@ -167,7 +167,7 @@ export const reset_password = (email) => async dispatch => {
     const body = JSON.stringify({email});
 
     try{
-        await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/reset-password/`, body, config);
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/reset-password/`, body, config);
         dispatch({
             type: PASSWORD_RESET_SUCCESS
         });
@@ -180,20 +180,20 @@ export const reset_password = (email) => async dispatch => {
 
 };
 
-export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch =>{
+export const reset_password_confirm = (password, re_new_password) => async dispatch =>{
     const config ={
+
         headers: {
-            'Content-Type': 'application/json'
+            'Authorization': `Token 0983cd00685628d035930589b3d0a11eed9589ff`
         }
     };
-    const body = JSON.stringify({uid, token, new_password, re_new_password});
+    const body = {password: `${password}`};
 
     try{
-
-        // KAKOI URL?? Nado sprosit' email activation?
-        await axios.post(`${process.env.REACT_APP_API_URL}/ap1/v1/users/activate/`, body, config);
+        await axios.put(`${process.env.REACT_APP_API_URL}/api/v1/users/reset-password/`, body, config);
         dispatch({
             type: PASSWORD_RESET_CONFIRM_SUCCESS
+            
         });
     } catch (err){
         dispatch({

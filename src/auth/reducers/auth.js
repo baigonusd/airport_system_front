@@ -54,7 +54,7 @@ export default function (state = initialState, action){
                 ...state,
                 access: null,
                 refresh: null,
-                isAutheeticated: false,
+                isAuthenticated: false,
                 user: null               
             }
         case PASSWORD_RESET_SUCCESS:

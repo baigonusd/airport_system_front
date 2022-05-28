@@ -15,14 +15,14 @@ import {
 import {reset_password_confirm} from '../auth/actions/auth';
 
 
-const ResetPasswordConfirm = ({match, reset_password_confirm}) => {
+const ResetPasswordConfirm = ({reset_password_confirm}) => {
   const [requestSent, setRequestSent] = useState(false);
   const [formData, setFromData] = useState({
-    new_password: '',
+    password: '',
     re_new_password: ''
   });
 
-  const { new_password, re_new_password } = formData;
+  const { password, re_new_password } = formData;
   
   const onChange = e => setFromData({
     ...formData,
@@ -31,12 +31,11 @@ const ResetPasswordConfirm = ({match, reset_password_confirm}) => {
 
   const onSubmit = e =>{
     e.preventDefault();
-
-    const uid = match.params.uid;
-    const token = match.params.token;
-
-    reset_password_confirm(uid, token, new_password, re_new_password);
+    console.log(password)
+    // const token = match.params.token;
+    reset_password_confirm(password, re_new_password);
     setRequestSent(true);
+    //return <Navigate to='/' />
   };
 
   if (requestSent){
@@ -55,15 +54,14 @@ const ResetPasswordConfirm = ({match, reset_password_confirm}) => {
               <StyledTextInput 
               type='password'
               placeholder='New Password'
-              name='new_password'
-              value={new_password}
+              name='password'
+              value={password}
               onChange={e => onChange(e)}
               minLength='8'
               required
               />
 
               <StyledTextInput
-              className='form-control'
               type='password'
               placeholder='Confirm New Password'
               name='re_new_password'
@@ -86,9 +84,7 @@ const ResetPasswordConfirm = ({match, reset_password_confirm}) => {
     </div>
 
   );
-
 };
-
 export default connect(null,{reset_password_confirm} ) (ResetPasswordConfirm);
 
 

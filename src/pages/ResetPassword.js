@@ -59,7 +59,7 @@ const ResetPassword = ({reset_password}) => {
               onChange={ e => onChange(e)}
               required
               />
-
+              <ExtraText> We will send you a message to reset your password.</ExtraText>
               
 
               <ButtonGroup>
