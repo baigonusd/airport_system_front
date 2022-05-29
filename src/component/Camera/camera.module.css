@@ -1,0 +1,14 @@
+.cam {
+  height: 100%;
+  width: 100%;
+  border: 3px solid black;
+}
+.close {
+  display: none;
+}
+.camDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
