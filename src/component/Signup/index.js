@@ -33,19 +33,23 @@ const Signup = ({ signup, isAuthenticated }) => {
         number_of_doc: '',
         password: '',
         re_password: '',
+        gender: '',
         role: '4',
-        gender: '1'
+        scan_udv: 'C:/Users/aruzh/Desktop/4 kurs/Diploma project/FaceRecognition-main/airport_system_front-master/src/Aru 2.jpg'
     });
 
     const { 
-      name, 
-      surname, 
-      email, 
-      iin, 
-      mobile_phone, 
-      number_of_doc, 
-      password, 
-      re_password} = formData;
+      name,
+      surname,
+      email,
+      mobile_phone,
+      number_of_doc,
+      iin,
+      gender,
+      password,
+      re_password,
+      role,
+      scan_udv } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -53,8 +57,19 @@ const Signup = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(name, surname, email, iin, mobile_phone, number_of_doc, password, re_password);
-            setAccountCreated(true);
+          signup(
+            name,
+            surname,
+            email,
+            mobile_phone,
+            number_of_doc,
+            iin,
+            gender,
+            password,
+            re_password,
+            role,
+            scan_udv);
+          setAccountCreated(true);
         }
     };
 
@@ -134,6 +149,16 @@ const Signup = ({ signup, isAuthenticated }) => {
               onChange={e => onChange(e)}
               required
               />
+              <input 
+              type="radio" 
+              name="gender" 
+              value={1}
+              onChange={e => onChange(e)} />Male
+              <input 
+              type="radio" 
+              name="gender" 
+              value={2}
+              onChange={e => onChange(e)} />Female
               <StyledTextInput 
               type='text'
               pattern="[0-9+]*"

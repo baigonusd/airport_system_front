@@ -66,16 +66,36 @@ import {
 
 // };
 
-export const signup = (name, surname, email, iin, mobile_phone, number_of_doc, password) => async dispatch => {
+export const signup = (name,
+    surname,
+    email,
+    mobile_phone,
+    number_of_doc,
+    iin,
+    gender,
+    password,
+    re_password,
+    role, 
+    scan_udv) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
-    const body = JSON.stringify({ name, surname, email, iin, mobile_phone, number_of_doc, password });
+    const body = JSON.stringify({ name,
+        surname,
+        email,
+        mobile_phone,
+        number_of_doc,
+        iin,
+        gender,
+        password,
+        re_password,
+        role,
+        scan_udv});
 
     try {
-        // const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -190,17 +210,18 @@ export const selectTicket = (token, ticket) => async dispatch => {
             'Authorization': `Token ${token}`
         }
     };
-    const body = JSON.stringify({ticket});
+    // const body = JSON.stringify({ticket});
     try {
-        const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
-        const baggages = [];
-        for (let i = 0; i < own_tickets.data.baggages.length; i++) {
-            const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${own_tickets.data.baggages[i]}`, body, config);
-            baggages.push(baggage_info);
-        }
+        // const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
+        // var baggages = [];
+        // for (let i = 0; i < own_tickets.data.baggages.length; i++) {
+        //     const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${own_tickets.data.baggages[i]}`, body, config);
+        //     baggages.push(baggage_info);
+        // }
+        // console.log(baggages)
         dispatch({
             type: SELECT_SUCCESS,
-            payload: JSON.stringify(baggages)
+            payload: '13'
         });
     } catch (err) {
         dispatch({
@@ -208,18 +229,37 @@ export const selectTicket = (token, ticket) => async dispatch => {
         })
     }
 };
-export const getBaggage = (token) => async dispatch => {
+export const getBaggage = (selected_ticket,access) => async dispatch => {
     const config = {
         headers: {
-            'Authorization': `Token ${token}`
+            'Authorization': `Token ${access}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'PostmanRuntime/7.29.0',
+            'Accept': '*/*',
+            'Connection': 'keep-alive',
+            'Accept-Encoding': 'gzip, deflate, br'
         }
     };
+    const body = {
+        params: {
+            'ticket': `${selected_ticket}`
+        }
+    }
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/`, config);
+        console.log(`selected_ticket ${JSON.stringify(body)}`)
+        const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
+        console.log(`own_tickets ${JSON.stringify(own_tickets)}`)
+        var list = JSON.parse(own_tickets.data.baggages)
+        var baggages = [];
+        for (let i = 0; i < list.length; i++) {
+            const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${list[i]}`, body, config);
+            baggages.push(baggage_info);
+        }
+        // const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/`, config);
         dispatch({
             type: BAGGAGE_SUCCESS,
-            payload: res.data
+            payload: baggages
         });
     } catch (err) {
         dispatch({

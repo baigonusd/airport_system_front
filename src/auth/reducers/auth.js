@@ -26,8 +26,9 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     tickets: localStorage.getItem('tickets'),
-    baggages: localStorage.getItem('baggages'),
+    baggages: null,
     form: localStorage.getItem('form'),
+    selected_ticket: null,
     user: null
 };
 
@@ -106,14 +107,15 @@ export default function (state = initialState, action){
                 refresh: payload.refresh
             }
         case SELECT_SUCCESS:
-                console.log(payload)
-                localStorage.setItem('baggages', JSON.stringify(payload))
+                localStorage.setItem('selected_ticket', payload)
                 return{
                     ...state,
-                    baggages: JSON.stringify(payload),
+                    selected_ticket : payload,
+                    // baggages: JSON.stringify(payload),
                     refresh: payload.refresh
                 }
         case BAGGAGE_SUCCESS:
+            
             localStorage.setItem('baggages', JSON.stringify(payload));
             return{
                 ...state,
