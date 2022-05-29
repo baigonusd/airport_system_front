@@ -16,7 +16,7 @@ import {
 
 import {login} from './../../auth/actions/auth';
 
-const Login = ({login,  isAuthenticated }) => {
+const Login = ({login,  isAuthenticated, detail }) => {
   const [formData, setFromData] = useState({
     email: '',
     phoneNumber: '',
@@ -25,7 +25,7 @@ const Login = ({login,  isAuthenticated }) => {
 
   const {email, phoneNumber, password} = formData;
 
-  //const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const [isOpen, setOpen] = useState(null);
   const onChange = e => setFromData({
     ...formData,
@@ -33,27 +33,66 @@ const Login = ({login,  isAuthenticated }) => {
   });
 
 const onSubmit = e =>{
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // };
-  // try {
-  //   const[token, setToken] = useState(null);
-  //   useEffect(() => {
-  //     localStorage.setItem(token, res.data.token);
-  //   }, [res.dats.token, token]);
-  //   const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config );
-  // } catch (err) {
-  //   console.log(err)
-  // }
+ 
     e.preventDefault();
     login(email, phoneNumber, password)
   };
 
+  
   if (isAuthenticated) {
     return <Navigate to='/welcome' />
   }
+  if(detail === null){
+    return (
+      <div> 
+        <StyledContainer>
+        {/* <Icon to="/"> Airport System</Icon> */}
+        <StyledFormArea>
+          <StyledTitle color={colors.theme} size={25}> Sign in to your account </StyledTitle>
+          
+              <form onSubmit={ e => onSubmit(e)}>
+                <StyledTextInput 
+                name="email"
+                type='email'
+                label={"Email Address"}
+                placeholder="Email Address"
+                value={email}
+                onChange={ e => onChange(e)}
+                required
+                />
+                
+                <StyledTextInput 
+                name="password"
+                type="password"
+                label='Password'
+                placeholder="Password"
+                value={password}
+                onChange={ e => onChange(e)}
+                required
+                />
+
+                <ButtonGroup>
+                  <StyledFormButton type="submit">
+                    Sign In
+                  </StyledFormButton>
+                </ButtonGroup>
+              </form>
+            
+          <ExtraText>
+            Forgot your password? <TextLink to="/reset-password">Reset it</TextLink>
+          </ExtraText>
+          <ExtraText>
+            New here? <TextLink to="/signup">Signup</TextLink>
+          </ExtraText>
+
+
+        </StyledFormArea>
+        
+        </StyledContainer>
+      </div>
+
+    );
+}else{
   return (
     <div> 
       <StyledContainer>
@@ -81,7 +120,9 @@ const onSubmit = e =>{
               onChange={ e => onChange(e)}
               required
               />
-
+              <ExtraText>
+                {detail}
+              </ExtraText>
               <ButtonGroup>
                 <StyledFormButton type="submit">
                   Sign In
@@ -103,10 +144,11 @@ const onSubmit = e =>{
     </div>
 
   );
-
-};
+}
+}
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  detail: state.auth.detail
 });
 
 export default connect(mapStateToProps, {login})(Login);

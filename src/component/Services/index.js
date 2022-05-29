@@ -29,7 +29,7 @@ const Services = () => {
             <ServicesCard> 
             <ServicesIcon src={Icon3}/>
             <ServicesH2>Step 3</ServicesH2>
-            <ServicesP> You can cheeeeeeeck </ServicesP>
+            <ServicesP> You can cheeeeeeeck. Qwertyuiopasdfghj </ServicesP>
             </ServicesCard>
         </ServicesWrapper>
     </ServicesContainer>

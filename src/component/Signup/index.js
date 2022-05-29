@@ -18,11 +18,7 @@ import {Navigate} from "react-router-dom";
 import {useState} from 'react';
 
 const Signup = ({ signup, isAuthenticated }) => {
-  // const [select, setSelect] = useState("betterPriceOnly");
-  // const handleSelectChange = (event) => {
-  //   const value = event.target.value;
-  //   setSelect(value);
-  // };
+  
   const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -34,7 +30,7 @@ const Signup = ({ signup, isAuthenticated }) => {
         password: '',
         re_password: '',
         role: '4',
-        gender: '1'
+        gender: ''
     });
 
     const { 
@@ -120,7 +116,7 @@ const Signup = ({ signup, isAuthenticated }) => {
               placeholder='iin'
               name='iin'
               value={iin}
-              size="11"
+              size="12"
               onChange={e => onChange(e)}
               required
               />

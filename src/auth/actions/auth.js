@@ -21,6 +21,8 @@ import {
     BAGGAGE_SUCCESS,
     SELECT_SUCCESS,
     SELECT_FAIL,
+    EMPLOYEE_SUCCESS,
+    EMPLOYEE_FAIL,
     LOGOUT
 } from './types';
 
@@ -75,7 +77,7 @@ export const signup = (name, surname, email, iin, mobile_phone, number_of_doc, p
     const body = JSON.stringify({ name, surname, email, iin, mobile_phone, number_of_doc, password });
 
     try {
-        // const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/signup/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -135,8 +137,10 @@ export const login = (email, phoneNumber, password) => async dispatch => {
         });
         dispatch(load_user)
     } catch (err) {
+        console.log(err)
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
+            payload: err.response.data
         });
 
     }
@@ -224,6 +228,27 @@ export const getBaggage = (token) => async dispatch => {
     } catch (err) {
         dispatch({
             type: BAGGAGE_FAIL
+        })
+    }
+};
+
+export const getIin = (token, iin) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+    };
+    const body = JSON.stringify({iin})
+
+    try{
+        //const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/`, body);
+        dispatch({
+            type: EMPLOYEE_SUCCESS,
+            //payload: res.data
+        });
+    } catch(err){
+        dispatch({
+            type: EMPLOYEE_FAIL
         })
     }
 };

@@ -28,7 +28,8 @@ const initialState = {
     tickets: localStorage.getItem('tickets'),
     baggages: localStorage.getItem('baggages'),
     form: localStorage.getItem('form'),
-    user: null
+    user: null,
+    detail: null
 };
 
 export default function (state = initialState, action){
@@ -48,11 +49,13 @@ export default function (state = initialState, action){
             //     localStorage.setItem("token", row);
             // }, row);
             localStorage.setItem('token', payload.token);
+            localStorage.setItem('detail', payload.detail)
             return{
                 ...state,
                 isAuthenticated: true,
                 access: payload.token,
-                refresh: payload.refresh
+                refresh: payload.refresh,
+                detail: payload.detail
             }
         case SIGNUP_SUCCESS:
             localStorage.setItem('form', JSON.stringify(payload))
@@ -75,12 +78,14 @@ export default function (state = initialState, action){
         case LOGIN_FAIL:
             localStorage.removeItem('token');
             localStorage.removeItem('refresh');
+            localStorage.setItem('detail', payload.detail)
             return{
                 ...state,
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null               
+                user: null,
+                detail: payload.detail        
             }
         case ACTIVATION_SUCCESS:
             return{

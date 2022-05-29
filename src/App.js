@@ -12,6 +12,8 @@ import SearchPage from './pages/SearchPage';
 import ResetPasswordPage from './pages/ResetPassword';
 import ResetPasswordConfirmPage from './pages/ResetPasswordConfirm';
 import VerifyCodePage from './pages/VerifyCode';
+import IinSearch from './pages/IinSearch';
+import EmployeeWelcome from './pages/EmployeeWelcome';
 
 import {Provider} from 'react-redux';
 import store from './store';
@@ -32,6 +34,8 @@ import store from './store';
         <Route exact path="/reset-password" element={<ResetPasswordPage/>}/>
         <Route exact path="/reset-password-confirm" element={<ResetPasswordConfirmPage/>}/>
         <Route exact path="/verify-code" element={<VerifyCodePage/>}/>
+        <Route export path="/iin-search" element={<IinSearch/>}/>
+        <Route export path="/employee-ticket" element={<EmployeeWelcome/>}/>
       </Routes> 
       {/* <Home />  */}
       
