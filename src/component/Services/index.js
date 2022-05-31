@@ -19,17 +19,17 @@ const Services = () => {
             <ServicesCard> 
             <ServicesIcon src={Icon1}/>
             <ServicesH2> Step 1 </ServicesH2>
-            <ServicesP> Redjisdjvfnjsnvsjfnvjfn. dkkfnvjsnv jvkm </ServicesP>
+            <ServicesP> The user can register on the website by entering their own credentials. </ServicesP>
             </ServicesCard>
             <ServicesCard> 
             <ServicesIcon src={Icon2}/>
             <ServicesH2> Step 2 </ServicesH2>
-            <ServicesP> You can check your baggage status. </ServicesP>
+            <ServicesP> When registering on the site, a user needs to scan an own face.  </ServicesP>
             </ServicesCard>
             <ServicesCard> 
             <ServicesIcon src={Icon3}/>
             <ServicesH2>Step 3</ServicesH2>
-            <ServicesP> You can cheeeeeeeck. Qwertyuiopasdfghj </ServicesP>
+            <ServicesP>  After successful registration on the website, the user can track tickets and baggage status. </ServicesP>
             </ServicesCard>
         </ServicesWrapper>
     </ServicesContainer>

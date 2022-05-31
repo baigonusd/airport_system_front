@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
+//import {Icon} from '../Styles.js';
 import { 
   StyledFormArea, 
   StyledFormButton, 
@@ -13,8 +14,8 @@ import {
   StyledTextInput
 } from '../Styles';
 
-
 import {login} from './../../auth/actions/auth';
+//import classes from './signin.css';
 
 const Login = ({login,  isAuthenticated, detail }) => {
   const [formData, setFromData] = useState({
@@ -25,18 +26,23 @@ const Login = ({login,  isAuthenticated, detail }) => {
 
   const {email, phoneNumber, password} = formData;
 
-  const [errors, setErrors] = useState({});
-  const [isOpen, setOpen] = useState(null);
+  const [formErrors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  //const [isOpen, setOpen] = useState(null);
   const onChange = e => setFromData({
     ...formData,
     [e.target.name]: e.target.value
   });
 
-const onSubmit = e =>{
- 
+  const onSubmit = e =>{
     e.preventDefault();
-    login(email, phoneNumber, password)
+    // console.log(`is empty ${Object.keys(formErrors).length === 0}`)
+    login(email, phoneNumber, password);
+    
   };
+
+
+  
 
   
   if (isAuthenticated) {
@@ -46,8 +52,9 @@ const onSubmit = e =>{
     return (
       <div> 
         <StyledContainer>
-        {/* <Icon to="/"> Airport System</Icon> */}
+        
         <StyledFormArea>
+        {/* <Icon to="/"> Airport System</Icon> */}
           <StyledTitle color={colors.theme} size={25}> Sign in to your account </StyledTitle>
           
               <form onSubmit={ e => onSubmit(e)}>
@@ -61,6 +68,7 @@ const onSubmit = e =>{
                 required
                 />
                 
+                
                 <StyledTextInput 
                 name="password"
                 type="password"
@@ -70,6 +78,7 @@ const onSubmit = e =>{
                 onChange={ e => onChange(e)}
                 required
                 />
+                <ExtraText>{formErrors.password}</ExtraText>
 
                 <ButtonGroup>
                   <StyledFormButton type="submit">
@@ -90,6 +99,7 @@ const onSubmit = e =>{
         
         </StyledContainer>
       </div>
+      
 
     );
 }else{
@@ -109,6 +119,7 @@ const onSubmit = e =>{
               value={email}
               onChange={ e => onChange(e)}
               required
+              
               />
               
               <StyledTextInput 

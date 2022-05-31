@@ -84,6 +84,7 @@ export const signup = (name, surname, email, iin, mobile_phone, number_of_doc, p
             payload: body
         });
     } catch (err) {
+        console.log(err)
         dispatch({
             type: SIGNUP_FAIL
         })
