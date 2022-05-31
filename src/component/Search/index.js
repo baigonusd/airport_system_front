@@ -10,13 +10,11 @@ import {
   StyledTextInput
 } from '../Styles';
 import {NavLink} from 'react-router-dom';
-
+// import {searchTicket} from "../auth/actions/auth";
 const Search = () => {
-
-
-
     const onSubmit = e => {
         e.preventDefault();
+
     };
 
   return (

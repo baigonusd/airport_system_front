@@ -221,7 +221,7 @@ export const selectTicket = (token, ticket) => async dispatch => {
         // console.log(baggages)
         dispatch({
             type: SELECT_SUCCESS,
-            payload: '13'
+            payload: ticket
         });
     } catch (err) {
         dispatch({
@@ -230,32 +230,22 @@ export const selectTicket = (token, ticket) => async dispatch => {
     }
 };
 export const getBaggage = (selected_ticket,access) => async dispatch => {
-    const config = {
-        headers: {
-            'Authorization': `Token ${access}`,
-            'Content-Type': 'application/json',
-            'User-Agent': 'PostmanRuntime/7.29.0',
-            'Accept': '*/*',
-            'Connection': 'keep-alive',
-            'Accept-Encoding': 'gzip, deflate, br'
-        }
-    };
-    const body = {
-        params: {
-            'ticket': `${selected_ticket}`
-        }
-    }
+    // const config = {
+    //     headers: {
+    //         'Authorization': `Token ${access}`
+    //     }
+    // };
 
     try {
-        console.log(`selected_ticket ${JSON.stringify(body)}`)
-        const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
-        console.log(`own_tickets ${JSON.stringify(own_tickets)}`)
-        var list = JSON.parse(own_tickets.data.baggages)
-        var baggages = [];
-        for (let i = 0; i < list.length; i++) {
-            const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${list[i]}`, body, config);
-            baggages.push(baggage_info);
-        }
+        console.log(`ticket id ${selected_ticket}`)
+        const baggages = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`);
+        // console.log(`own_tickets ${JSON.stringify(own_tickets)}`)
+        // var list = JSON.parse(own_tickets.data.baggages)
+        // var baggages = [];
+        // for (let i = 0; i < list.length; i++) {
+        //     const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${list[i]}`, body, config);
+        //     baggages.push(baggage_info);
+        // }
         // const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/`, config);
         dispatch({
             type: BAGGAGE_SUCCESS,

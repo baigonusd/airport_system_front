@@ -19,30 +19,37 @@ const StyledButton = styled.button`
   height: 48px;
 `;
 export const Ticket = ({ticket, selectTicket, access}) => {
+  const status = (ticket_status) => {
+    if (ticket_status === 1) return "Not used"
+    if (ticket_status === 2) return "Registration"
+    if (ticket_status === 3) return "Security control"
+    if (ticket_status === 4) return "Used"
+    if (ticket_status === 5) return "Baggage"
+  };
   let navigate = useNavigate();
   return (
     <section className={classes.container}>
-      <div className={classes.price}>{`${ticket.from_location} - ${ticket.to_location}`}</div>
+      <div className={classes.price}>{`${ticket.flight_from_location} - ${ticket.flight_to_location}`}</div>
       <div className={classes.info}>
         <div className={classes.item}>
           <h3>Airline</h3>
-          <span>{ticket.airline_name}</span>
+          <span>{ticket.flight_airline}</span>
         </div>
         <div className={classes.item}>
           <h3>Departure</h3>
-          <span>{ticket.time_start}</span>
+          <span>{ticket.flight_time_start}</span>
         </div>
         <div className={classes.item}>
           <h3>Arrival</h3>
-          <span>{ticket.time_finish}</span>
+          <span>{ticket.flight_time_finish}</span>
         </div>
         <div className={classes.item}>
           <h3>Status</h3>
-          <span>{ticket.status}</span>
+          <span>{status(ticket.status)}</span>
         </div>
         <StyledButton
           onClick={() => {
-            selectTicket(access, ticket.id)
+            selectTicket(access, ticket.flight)
             navigate("/baggage");
           }}>
             More

@@ -5,6 +5,13 @@ import line from "../../images/line.png";
 import vector from "../../images/vector.png";
 import flight from "../../images/flight.png";
 const More = ({from_location, to_location, airline_name, time_start, time_finish, status}) => {
+  const get_status = (ticket_status) => {
+    if (ticket_status === 1) return "Not used"
+    if (ticket_status === 2) return "Registration"
+    if (ticket_status === 3) return "Security control"
+    if (ticket_status === 4) return "Used"
+    if (ticket_status === 5) return "Baggage"
+  };
   const time = (date) => {
     var new_date = new Date(date);
     return `${new_date.toLocaleTimeString()}`;
@@ -35,7 +42,7 @@ const More = ({from_location, to_location, airline_name, time_start, time_finish
       <div className={classes.info}>
         <div className={classes.item}>
           <h3>Flight status</h3>  
-          <h1>{status}</h1>
+          <h1>{get_status(status)}</h1>
         </div>
       </div>
     </section>

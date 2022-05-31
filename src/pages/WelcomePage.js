@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import React from 'react'
+import React from "react";
 import Logo from "../component/Icons/Logo";
 import List from "../component/List";
 import "../styles.css";
