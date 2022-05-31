@@ -162,8 +162,16 @@ text-align: center;
 color: ${(props) => (props.color ? props.color : colors.dark2)};
 padding: 2px;
 margin-top: 10px;
-` 
+` ;
 
+export const ErrorText = styled.p`
+font-size: ${(props) => props.size}px;
+text-align: center;
+color: ${(props) => (props.color ? props.color : colors.red)};
+padding: 1px;
+margin-top: 5px;
+` ;
+ 
 export const TextLink = styled(Link)`
 text-decoration: none;
 color: ${colors.theme};
@@ -246,13 +254,13 @@ export const StyledSeconds = styled.div`
   color: #000000;
 `;
 
-export const StyledError = styled.div`
+export const StyledError = styled.p`
   margin-top: 13px;
   font-size: 12px;
   line-height: 16px;
   text-align: center;
-  letter-spacing: 0.004em;
-  color: #000000;
+  letter-spacing: 0.1em;
+  color: red;
 `;
 
 export const StyledButtonAct = styled.button`

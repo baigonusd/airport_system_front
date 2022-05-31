@@ -21,6 +21,8 @@ import {
     BAGGAGE_SUCCESS,
     SELECT_SUCCESS,
     SELECT_FAIL,
+    SEARCH_SUCCESS,
+    SEARCH_FAIL,
     LOGOUT
 } from './types';
 
@@ -185,6 +187,25 @@ export const verify = (mobile_phone, code) => async dispatch => {
     }
 };
 
+export const searchTicket = (iin, ticket_id) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/ticket/get_tickets_by_iin_or_ticketid/?ticket_id=${ticket_id}`, config);
+        dispatch({
+            type: SEARCH_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SEARCH_FAIL
+        })
+    }
+};
+
 export const getTicket = (token) => async dispatch => {
     const config = {
         headers: {
@@ -210,15 +231,7 @@ export const selectTicket = (token, ticket) => async dispatch => {
             'Authorization': `Token ${token}`
         }
     };
-    // const body = JSON.stringify({ticket});
     try {
-        // const own_tickets = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/boarding/`, body, config);
-        // var baggages = [];
-        // for (let i = 0; i < own_tickets.data.baggages.length; i++) {
-        //     const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${own_tickets.data.baggages[i]}`, body, config);
-        //     baggages.push(baggage_info);
-        // }
-        // console.log(baggages)
         dispatch({
             type: SELECT_SUCCESS,
             payload: ticket
@@ -230,23 +243,21 @@ export const selectTicket = (token, ticket) => async dispatch => {
     }
 };
 export const getBaggage = (selected_ticket,access) => async dispatch => {
-    // const config = {
-    //     headers: {
-    //         'Authorization': `Token ${access}`
-    //     }
-    // };
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Vary': 'Accept, Origin',
+            'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS',
+            'X-Frame-Options': 'DENY',
+            'Content-Length': '156',
+            'X-Content-Type-Options': 'nosniff'
+        }
+    };
 
     try {
-        console.log(`ticket id ${selected_ticket}`)
-        const baggages = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`);
-        // console.log(`own_tickets ${JSON.stringify(own_tickets)}`)
-        // var list = JSON.parse(own_tickets.data.baggages)
-        // var baggages = [];
-        // for (let i = 0; i < list.length; i++) {
-        //     const baggage_info = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${list[i]}`, body, config);
-        //     baggages.push(baggage_info);
-        // }
-        // const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/`, config);
+        console.log(`ticket id ${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`)
+        const baggages = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`, config);
+        
         dispatch({
             type: BAGGAGE_SUCCESS,
             payload: baggages

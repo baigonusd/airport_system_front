@@ -19,12 +19,13 @@ const StyledButton = styled.button`
   height: 48px;
 `;
 export const Ticket = ({ticket, selectTicket, access}) => {
-  const status = (ticket_status) => {
-    if (ticket_status === 1) return "Not used"
-    if (ticket_status === 2) return "Registration"
-    if (ticket_status === 3) return "Security control"
-    if (ticket_status === 4) return "Used"
-    if (ticket_status === 5) return "Baggage"
+  const get_status = (ticket_status) => {
+    if (ticket_status === 1) return "At the departure airport"
+    if (ticket_status === 2) return "Loading on the plane"
+    if (ticket_status === 3) return "On the plane"
+    if (ticket_status === 4) return "Unloading from the plane"
+    if (ticket_status === 5) return "At the arrival airport"
+    if (ticket_status === 6) return "Arrested"
   };
   let navigate = useNavigate();
   return (
@@ -45,7 +46,7 @@ export const Ticket = ({ticket, selectTicket, access}) => {
         </div>
         <div className={classes.item}>
           <h3>Status</h3>
-          <span>{status(ticket.status)}</span>
+          <span>{get_status(ticket.status)}</span>
         </div>
         <StyledButton
           onClick={() => {

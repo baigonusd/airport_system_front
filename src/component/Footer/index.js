@@ -16,20 +16,23 @@ const Footer = () => {
             <FooterLinksContainer>
                 <FooterLinksWrapper>
                     <FooterLinkItems>
-                    <FooterLinksWrapper>
+                    
                         <FooterLinkTitle> About Us</FooterLinkTitle>
                         <FooterLink to='/signin'>How it works</FooterLink>
                         <FooterLink to='/signin'>Terms of service</FooterLink>
-                    </FooterLinksWrapper>
+                        <FooterLink to='/signin'>Terms of service</FooterLink>
+                        <FooterLink to='/signin'>Terms of service</FooterLink>
+                        
+                    
                     </FooterLinkItems>
                     <FooterLinkItems>
-                    <FooterLinksWrapper>
+                    
                         <FooterLinkTitle> About Us</FooterLinkTitle>
                         <FooterLink to='/signin'>How it works</FooterLink>
                         <FooterLink to='/signin'>Terms of service</FooterLink>
-                    </FooterLinksWrapper>
-                    </FooterLinkItems>
-                    
+                        <FooterLink to='/signin'>Terms of service</FooterLink>
+                        <FooterLink to='/signin'>Terms of service</FooterLink>
+                    </FooterLinkItems>                   
                 </FooterLinksWrapper>
             </FooterLinksContainer>
         </FooterWrap>

@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import {searchTicket} from './../../auth/actions/auth';
-import {connect} from 'react-redux';
-import {Navigate} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import {
   StyledFormArea,
   StyledFormButton,
@@ -13,17 +9,18 @@ import {
   ButtonGroup,
   StyledTextInput,
   StyledError
-} from '../Styles';
+} from '../component/Styles'
 import { NavLink } from 'react-router-dom';
+import { getIin } from '../auth/actions/auth';
 
-const Search = ({searchTicket,tickets}) => {
-  let navigate = useNavigate();
-  const [formErrors, setErrors] = useState({});
+const IinSearch = ({ getIin }) => {
   const [formData, setFormData] = useState({
-    ticket_id:'',
     iin: ''
   });
-  const { ticket_id, iin } = formData;
+
+  const { iin } = formData;
+  const [formErrors, setErrors] = useState({});
+
   const onChange = e => setFormData({
     ...formData,
     [e.target.name]: e.target.value
@@ -32,8 +29,8 @@ const Search = ({searchTicket,tickets}) => {
   const onSubmit = e => {
     e.preventDefault();
     setErrors(validate(formData));
-    searchTicket(iin, ticket_id);
-    navigate("/employee-ticket");
+    
+    getIin(iin);
   };
 
   const validate = (values) => {
@@ -50,43 +47,32 @@ const Search = ({searchTicket,tickets}) => {
     return errors;
   };
 
-
   return (
     <>
       <div>
         <StyledContainer>
           {/* <Icon to="/"> Airport System</Icon> */}
           <StyledFormArea>
-            <StyledTitle color={colors.theme} size={30}> Search </StyledTitle>
+            <StyledTitle color={colors.theme} size={30}> Enter your IIN </StyledTitle>
             <form onSubmit={e => onSubmit(e)}>
-              <StyledTextInput
-                type='text'
-                placeholder='Ticket ID'
-                name='ticket_id'
-                pattern="[0-9]*"
-                value={ticket_id}
-                onChange={e => onChange(e)}
-                required
-              />
-              <StyledTextInput
-                type='text'
-                pattern="[0-9]*"
-                placeholder='IIN'
-                name='iin'
-                value={iin}
-                size="12"
-                onChange={e => onChange(e)}
-                required
-              />
-              <StyledError>{formErrors.iin}</StyledError>
-              <ExtraText>
+            <ExtraText>
                 IIN consists of only 12 digits
               </ExtraText>
+              <StyledTextInput
+                type='text'
+                pattern="[0-9]"
+                placeholder='IIN'
+                name='iin'
+                maxLength="12"
+                onChange={e => onChange(e)}
+                required
+              />
               
+              <StyledError>{formErrors.iin}</StyledError>
               <ButtonGroup>
                 <StyledFormButton type="submit">
                   Search
-                  <NavLink to='/welcome' />
+                  <NavLink to='/' />
                 </StyledFormButton>
               </ButtonGroup>
             </form>
@@ -98,8 +84,4 @@ const Search = ({searchTicket,tickets}) => {
 
   );
 };
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  tickets: state.auth.tickets
-});
-export default connect(mapStateToProps, {searchTicket})(Search);
+export default IinSearch;

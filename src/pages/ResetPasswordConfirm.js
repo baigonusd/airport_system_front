@@ -34,7 +34,11 @@ const ResetPasswordConfirm = ({reset_password_confirm}) => {
     console.log(password)
     // const token = match.params.token;
     reset_password_confirm(password, re_new_password);
-    setRequestSent(true);
+    if (password === re_new_password) {
+      reset_password_confirm(password, re_new_password);
+      setRequestSent(true);
+  }
+    
     //return <Navigate to='/' />
   };
 

@@ -8,7 +8,9 @@ import {
   ButtonGroup,
   ExtraText,
   TextLink,
-  StyledTextInput
+  StyledTextInput,
+  ErrorText,
+  StyledError
 } from '../Styles';
 
 //auth and redux
@@ -18,11 +20,8 @@ import {Navigate} from "react-router-dom";
 import {useState} from 'react';
 
 const Signup = ({ signup, isAuthenticated }) => {
-  // const [select, setSelect] = useState("betterPriceOnly");
-  // const handleSelectChange = (event) => {
-  //   const value = event.target.value;
-  //   setSelect(value);
-  // };
+  const [formErrors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -54,9 +53,12 @@ const Signup = ({ signup, isAuthenticated }) => {
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = e => {
-        e.preventDefault();
+          e.preventDefault(); 
+          setErrors(validate(formData));
+          console.log(`is empty ${Object.keys(formErrors).length === 0}`);
+          setIsSubmit(true);
 
-        if (password === re_password) {
+        if (password === re_password && password.length >= 8) {
           signup(
             name,
             surname,
@@ -73,12 +75,55 @@ const Signup = ({ signup, isAuthenticated }) => {
         }
     };
 
-    // const handleChangeInput = (e) => {
-    //   const re = /^[0-9\b]+$/; //rules
-    //   if (e.target.value === "" || re.test(e.target.value)) {
-    //     setPhoneNumber(e.target.value);
-    //   }
+    const validate = (values) => {
+      const errors = {};
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+      const reg = /^[A-Za-z]+$/i; ///^[a-z]+$/i;
+      const phoneRegExp = /^[\d ()+-]+$/;
+      if (!values.email) {
+        errors.email = "Email is required!";
+      } else if (!regex.test(values.email)) {
+        errors.email = "This is not a valid email format!";
+      }
+      if (!values.name) {
+        errors.name = "Name is required!";
+      } else if (!reg.test(values.name)) {
+        errors.name = "This is not a valid name format!";
+      }
+      if (!values.surname) {
+        errors.surname = "Surname is required!";
+      } else if (!reg.test(values.surname)) {
+        errors.surname = "This is not a valid Last Name format!";
+      }
+      if (!values.password) {
+        errors.password = "Password is required";
+      } else if (values.password.length < 8) {
+        errors.password = "Password must be more than 8 characters";
+      } 
+      if (!values.re_password) {
+        errors.re_password = "Password is required";
+      } else if (values.re_password.length < 8) {
+        errors.re_password = "Password must be more than 8 characters";
+      } 
+      if (!values.iin){
+      errors.iin = "IIN is required!";
+    } else if (values.iin.length != 12 ) {
+      errors.iin = "This is not a valid iin format!";
+    }
+    if (!values.number_of_doc){
+      errors.number_of_doc = "IIN is required!";
+    } else if (values.number_of_doc.length != 9) {
+      errors.number_of_doc = "This is not a valid doc num format!";
+    }
+    if (!values.mobile_phone){
+      errors.mobile_phone = "Mobile number is required!";
+    } else if (!phoneRegExp.test(values.mobile_phone.length)) {
+      errors.mobile_phone = "This is not a valid mobile phone format!";
+    }
 
+      return errors;
+    };
+  
  
 
   // const handleChangeInput = (e) => {
@@ -111,24 +156,28 @@ const Signup = ({ signup, isAuthenticated }) => {
               name='name'
               value={name}
               onChange={e => onChange(e)}
-              required
+              //required
               />
+              <StyledError>{formErrors.name}</StyledError>
+
               <StyledTextInput 
               type='text'
               placeholder='Last Name'
               name='surname'
               value={surname}
               onChange={e => onChange(e)}
-              required
+              //required
               />
+              <StyledError>{formErrors.surname}</StyledError>
               <StyledTextInput
                 type='email'
                 placeholder='Email'
                 name='email'
                 value={email}
                 onChange={e => onChange(e)}
-                required
+                //required
               />
+              <StyledError>{formErrors.email}</StyledError>
               <StyledTextInput 
               type='text'
               pattern="[0-9]*"
@@ -136,19 +185,22 @@ const Signup = ({ signup, isAuthenticated }) => {
               name='iin'
               value={iin}
               size="11"
+              maxLength="12"
               onChange={e => onChange(e)}
-              required
+              //required
               />
+              <StyledError>{formErrors.iin}</StyledError>
               <StyledTextInput 
               type='text'
               pattern="[0-9]*"
               placeholder='Doc Number'
               name='number_of_doc'
               value={number_of_doc}
-              maxLength="12"
+              maxLength="9"
               onChange={e => onChange(e)}
-              required
+              //required
               />
+              <StyledError>{formErrors.number_of_doc}</StyledError>
               <input 
               type="radio" 
               name="gender" 
@@ -158,10 +210,12 @@ const Signup = ({ signup, isAuthenticated }) => {
               type="radio" 
               name="gender" 
               value={2}
-              onChange={e => onChange(e)} />Female
+              onChange={e => onChange(e)}
+              required />Female
+              <StyledError>{formErrors.password}</StyledError>
               <StyledTextInput 
               type='text'
-              pattern="[0-9+]*"
+              //pattern="[0-9+]*"
               placeholder='Phone Number'
               name='mobile_phone'
               value={mobile_phone}
@@ -169,6 +223,7 @@ const Signup = ({ signup, isAuthenticated }) => {
               onChange={e => onChange(e)}
               required
               />
+              <StyledError>{formErrors.mobile_phone}</StyledError>
 
              <StyledTextInput 
               type='password'
@@ -176,9 +231,10 @@ const Signup = ({ signup, isAuthenticated }) => {
               name='password'
               value={password}
               onChange={e => onChange(e)}
-              minLength='8'
-              required
+              //minLength='8'
+              //required
               />
+              <StyledError>{formErrors.password}</StyledError>
 
             <StyledTextInput 
               type='password'
@@ -186,9 +242,11 @@ const Signup = ({ signup, isAuthenticated }) => {
               name='re_password'
               value={re_password}
               onChange={e => onChange(e)}
-              minLength='8'
-              required
+              //minLength='8'
+              //required
               />
+              <StyledError>{formErrors.re_password}</StyledError>
+              
 
               <ButtonGroup>
                 <StyledFormButton type="submit">

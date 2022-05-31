@@ -18,6 +18,8 @@ TICKET_SUCCESS,
 BAGGAGE_FAIL,
 SELECT_SUCCESS,
 SELECT_FAIL,
+SEARCH_FAIL,
+SEARCH_SUCCESS,
 BAGGAGE_SUCCESS
 } from '../actions/types';
 
@@ -26,10 +28,12 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
     tickets: localStorage.getItem('tickets'),
-    baggages: null,
+    baggages: localStorage.getItem('baggages'),
     form: localStorage.getItem('form'),
     selected_ticket: null,
-    user: null
+    user: null,
+    detail: null,
+    employee_ticket: localStorage.getItem('employee_ticket'),
 };
 
 export default function (state = initialState, action){
@@ -49,11 +53,13 @@ export default function (state = initialState, action){
             //     localStorage.setItem("token", row);
             // }, row);
             localStorage.setItem('token', payload.token);
+            localStorage.setItem('detail', payload.detail)
             return{
                 ...state,
                 isAuthenticated: true,
                 access: payload.token,
-                refresh: payload.refresh
+                refresh: payload.refresh,
+                detail: payload.detail
             }
         case SIGNUP_SUCCESS:
             localStorage.setItem('form', JSON.stringify(payload))
@@ -76,12 +82,14 @@ export default function (state = initialState, action){
         case LOGIN_FAIL:
             localStorage.removeItem('token');
             localStorage.removeItem('refresh');
+            localStorage.setItem('detail', payload.detail)
             return{
                 ...state,
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null               
+                user: null,
+                detail: payload.detail        
             }
         case ACTIVATION_SUCCESS:
             return{
@@ -90,16 +98,13 @@ export default function (state = initialState, action){
                 access: payload.token,
                 refresh: payload.refresh
             }
-        
+        case SEARCH_SUCCESS:
+            localStorage.setItem('employee_ticket', JSON.stringify(payload))
+            return{
+                ...state,
+                employee_ticket: payload
+            }
         case TICKET_SUCCESS:
-            // const [payload, setItems] = useState(null);
-            // useEffect(() => {
-            //     window.localStorage.setItems('tickets', JSON.stringify(payload));
-            // }, [payload])
-            // setItems(payload)
-            // AsynStorage.setItem('tickets', JSON.stringify(payload))
-            // localStorage.setItem('tickets', JSON.stringify(payload));
-            console.log(JSON.stringify(payload))
             localStorage.setItem('tickets', JSON.stringify(payload))
             return{
                 ...state,
@@ -130,6 +135,7 @@ export default function (state = initialState, action){
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_CONFIRM_FAIL:
         case ACTIVATION_FAIL:
+        case SEARCH_FAIL:
             return{
                 ...state
             }
