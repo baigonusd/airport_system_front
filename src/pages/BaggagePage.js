@@ -9,13 +9,6 @@ import {getBaggage} from "../auth/actions/auth";
 import {Navigate} from 'react-router-dom';
 
 const BaggagePage = ({getBaggage, isAuthenticated, baggages, tickets, access, selected_ticket}) => {
-  const status = (ticket_status) => {
-    if (ticket_status === 1) return "Not used"
-    if (ticket_status === 2) return "Registration"
-    if (ticket_status === 3) return "Security control"
-    if (ticket_status === 4) return "Used"
-    if (ticket_status === 5) return "Baggage"
-  };
   if (isAuthenticated) {
     getBaggage(selected_ticket, access)
     const baggage_data = JSON.parse(baggages);
@@ -45,6 +38,7 @@ const BaggagePage = ({getBaggage, isAuthenticated, baggages, tickets, access, se
     }else{
       return (
         <div className="page">
+          <main>
             {baggage_data.map((baggage) => (
               <Baggage
                 id={baggage.id}
@@ -53,13 +47,14 @@ const BaggagePage = ({getBaggage, isAuthenticated, baggages, tickets, access, se
               />
             ))}
             <More key={data.id}
-              from_location={data.from_location}
-              to_location={data.to_location}
-              airline_name={data.airline_name}
-              time_start={data.time_start}
-              time_finish = {data.time_finish}
-              status = {status(data.status)}
+              from_location={data.flight_from_location}
+              to_location={data.flight_to_location}
+              airline_name={data.flight_airline}
+              time_start={data.flight_time_start}
+              time_finish = {data.flight_time_finish}
+              status = {data.status}
             />
+          </main>
         </div>
   )
     }

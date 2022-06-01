@@ -31,8 +31,8 @@ import store from './store';
         <Route exact path="/welcome" element={<WelcomePage/>}/>
         <Route exact path="/baggage" element={<BaggagePage/>}/>
         <Route exact path="/search" element={<SearchPage/>}/>
-        <Route exact path="/reset-password" element={<ResetPasswordPage/>}/>
-        <Route exact path="/reset-password-confirm" element={<ResetPasswordConfirmPage/>}/>
+        <Route exact path="/email" element={<ResetPasswordPage/>}/>
+        <Route exact path="/reset-password" element={<ResetPasswordConfirmPage/>}/>
         <Route exact path="/verify-code" element={<VerifyCodePage/>}/>
         <Route export path="/iin-search" element={<IinSearch/>}/>
         <Route export path="/employee-ticket" element={<EmployeeWelcome/>}/>

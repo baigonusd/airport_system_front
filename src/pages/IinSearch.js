@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import {Navigate} from 'react-router-dom';
+import {connect} from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import {
   StyledFormArea,
   StyledFormButton,
@@ -13,7 +16,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { getIin } from '../auth/actions/auth';
 
-const IinSearch = ({ getIin }) => {
+const IinSearch = ({ getIin, employee_ticket}) => {
   const [formData, setFormData] = useState({
     iin: ''
   });
@@ -31,6 +34,19 @@ const IinSearch = ({ getIin }) => {
     setErrors(validate(formData));
     
     getIin(iin);
+    console.log(employee_ticket);
+    console.log(`is empty ${JSON.parse(employee_ticket).length}`);
+    if(JSON.parse(employee_ticket).length == 0){
+      navigate("/welcome");
+    }else{
+      navigate("/");
+    }
+    console.log(employee_ticket)
+    // if (employee_ticket === []) {
+    //   return <Navigate to='/signin' />
+    // }else{
+    //   return <Navigate to='/' />
+    // }
   };
 
   const validate = (values) => {
@@ -46,7 +62,7 @@ const IinSearch = ({ getIin }) => {
 
     return errors;
   };
-
+  let navigate = useNavigate();
   return (
     <>
       <div>
@@ -60,10 +76,11 @@ const IinSearch = ({ getIin }) => {
               </ExtraText>
               <StyledTextInput
                 type='text'
-                pattern="[0-9]"
+                pattern="[0-9]*"
                 placeholder='IIN'
                 name='iin'
-                maxLength="12"
+                size="12"
+                value={iin}
                 onChange={e => onChange(e)}
                 required
               />
@@ -72,7 +89,7 @@ const IinSearch = ({ getIin }) => {
               <ButtonGroup>
                 <StyledFormButton type="submit">
                   Search
-                  <NavLink to='/' />
+                  {/* <NavLink to='/' /> */}
                 </StyledFormButton>
               </ButtonGroup>
             </form>
@@ -84,4 +101,8 @@ const IinSearch = ({ getIin }) => {
 
   );
 };
-export default IinSearch;
+const mapStateToProps = state => ({
+  employee_ticket: state.auth.employee_ticket
+});
+
+export default connect(mapStateToProps, {getIin})(IinSearch);

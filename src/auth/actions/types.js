@@ -23,3 +23,4 @@ export const EMPLOYEE_SUCCESS = 'EMPLOYEE_SUCCESS';
 export const EMPLOYEE_FAIL = 'EMPLOYEE_FAIL';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAIL = 'SEARCH_FAIL';
+export const IIN_SUCCESS = 'IIN_SUCCESS';

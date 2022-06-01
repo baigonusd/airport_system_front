@@ -48,7 +48,7 @@ const Login = ({login,  isAuthenticated, detail }) => {
   if (isAuthenticated) {
     return <Navigate to='/welcome' />
   }
-  if(detail === null){
+  if(detail === null || detail === 'null'){
     return (
       <div> 
         <StyledContainer>

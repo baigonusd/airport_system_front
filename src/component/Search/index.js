@@ -16,7 +16,7 @@ import {
 } from '../Styles';
 import { NavLink } from 'react-router-dom';
 
-const Search = ({searchTicket,tickets}) => {
+const Search = ({searchTicket}) => {
   let navigate = useNavigate();
   const [formErrors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -99,7 +99,6 @@ const Search = ({searchTicket,tickets}) => {
   );
 };
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  tickets: state.auth.tickets
+  isAuthenticated: state.auth.isAuthenticated
 });
 export default connect(mapStateToProps, {searchTicket})(Search);

@@ -151,14 +151,16 @@ export const login = (email, phoneNumber, password) => async dispatch => {
 
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/users/login/`, body, config );
+        console.log(`res ${res.data}`)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-        dispatch(load_user)
     } catch (err) {
+        console.log(`err ${err}`)
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
+            payload: err
         });
 
     }
@@ -242,25 +244,35 @@ export const selectTicket = (token, ticket) => async dispatch => {
         })
     }
 };
-export const getBaggage = (selected_ticket,access) => async dispatch => {
+
+export const getIin = (iin) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json',
-            'Vary': 'Accept, Origin',
-            'Allow': 'GET, PUT, PATCH, DELETE, HEAD, OPTIONS',
-            'X-Frame-Options': 'DENY',
-            'Content-Length': '156',
-            'X-Content-Type-Options': 'nosniff'
+            'Content-Type': 'application/json'
         }
     };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/ticket/get_tickets_by_iin_or_ticketid/?iin=${iin}`, config);
+        dispatch({
+            type: SEARCH_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SEARCH_FAIL
+        })
+    }
+};
+
+export const getBaggage = (selected_ticket,access) => async dispatch => {
 
     try {
-        console.log(`ticket id ${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`)
-        const baggages = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/${selected_ticket}`, config);
+        console.log(`ticket id ${process.env.REACT_APP_API_URL}/api/v1/track/baggage/?id=${selected_ticket}`)
+        const baggages = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/track/baggage/?id=${selected_ticket}`);
         
         dispatch({
             type: BAGGAGE_SUCCESS,
-            payload: baggages
+            payload: baggages.data
         });
     } catch (err) {
         dispatch({
@@ -293,10 +305,13 @@ export const reset_password = (email) => async dispatch => {
 };
 
 export const reset_password_confirm = (password, re_new_password) => async dispatch =>{
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const token = urlParams.get('t')
     const config ={
 
         headers: {
-            'Authorization': `Token 0983cd00685628d035930589b3d0a11eed9589ff`
+            'Authorization': `Token ${token}`
         }
     };
     const body = {password: `${password}`};

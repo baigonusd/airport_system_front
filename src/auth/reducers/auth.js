@@ -20,7 +20,8 @@ SELECT_SUCCESS,
 SELECT_FAIL,
 SEARCH_FAIL,
 SEARCH_SUCCESS,
-BAGGAGE_SUCCESS
+BAGGAGE_SUCCESS,
+IIN_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -33,25 +34,13 @@ const initialState = {
     selected_ticket: null,
     user: null,
     detail: null,
-    employee_ticket: localStorage.getItem('employee_ticket'),
+    employee_ticket: localStorage.getItem('employee_ticket')
 };
 
 export default function (state = initialState, action){
     const { type, payload } = action;
-
     switch(type){
         case LOGIN_SUCCESS:
-            // const [token, setToken] = useState(null);
-            // useEffect(() => {
-            //     localStorage.setItem('token', token);
-            // }, [token]);
-            // setToken(payload.token)
-            // const [row, setRow] = useState(null);
-            // // localStorage.setItem('token', payload.token);
-            // setRow(payload.token);
-            // useEffect(() => {
-            //     localStorage.setItem("token", row);
-            // }, row);
             localStorage.setItem('token', payload.token);
             localStorage.setItem('detail', payload.detail)
             return{
@@ -82,6 +71,7 @@ export default function (state = initialState, action){
         case LOGIN_FAIL:
             localStorage.removeItem('token');
             localStorage.removeItem('refresh');
+            console.log(`fail ${payload.detail}`)
             localStorage.setItem('detail', payload.detail)
             return{
                 ...state,
@@ -100,12 +90,17 @@ export default function (state = initialState, action){
             }
         case SEARCH_SUCCESS:
             localStorage.setItem('employee_ticket', JSON.stringify(payload))
+            console.log(`reducer ${JSON.stringify(payload)}`)
+
             return{
                 ...state,
-                employee_ticket: payload
+                employee_ticket: JSON.stringify(payload),
+                refresh: payload.refresh
             }
+
         case TICKET_SUCCESS:
             localStorage.setItem('tickets', JSON.stringify(payload))
+            console.log(JSON.stringify(payload));
             return{
                 ...state,
                 tickets: JSON.stringify(payload),
