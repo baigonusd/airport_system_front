@@ -1,7 +1,6 @@
 .cam {
   height: 100%;
   width: 100%;
-  border: 3px solid black;
 }
 .close {
   display: none;
@@ -11,4 +10,16 @@
   height: 100%;
   display: flex;
   justify-content: center;
+}
+.btn {
+  background: LightCoral;
+  padding: 14px 48px;
+  border-radius: 50px;
+  transition: all 0.2s ease-in-out;
+  position: absolute;
+  bottom: 90px;
+}
+.btn:hover {
+  background: white;
+  transition: all 0.2s ease-in-out;
 }

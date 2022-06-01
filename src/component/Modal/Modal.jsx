@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "./modal.module.css";
 
-const Modal = ({ active, setActive, children }) => {
-  console.log(active);
+const Modal = ({ active, children }) => {
   return (
     <div
       className={
-        active.camera ? `${styled.modal} ${styled.active} ` : `${styled.modal}`
+        active ? `${styled.modal} ${styled.active} ` : `${styled.modal}`
       }
-      onClick={() => setActive(false)}
     >
       <div
         className={styled.modal_content}

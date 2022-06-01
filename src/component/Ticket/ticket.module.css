@@ -1,0 +1,47 @@
+.container {
+  height: 70%;
+  width: 90%;
+  /* height: 90%;
+  width: 100%; */
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 30px auto;
+  margin-top: 0px;
+  flex-direction: column;
+}
+.left {
+  padding: 20px 90px 20px 0px;
+}
+.right {
+  padding: 20px 60px 20px 20px;
+}
+.leftSide {
+  padding: 20px 0px 20px 0px;
+}
+.hs {
+  display: flex;
+  width: 89%;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}
+.one,
+.two {
+  padding-left: 35px;
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+.btn {
+  background: LightCoral;
+  padding: 14px 48px;
+  border-radius: 50px;
+  transition: all 0.2s ease-in-out;
+  position: absolute;
+  bottom: 90px;
+}
+.btn:hover {
+  background: white;
+  transition: all 0.2s ease-in-out;
+}

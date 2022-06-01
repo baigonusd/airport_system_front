@@ -55,26 +55,33 @@ class Camera extends React.Component {
     this.state = {
       camera: false,
     };
+    this.i = 0;
   }
   setCam(bool) {
     this.setState({ camera: bool });
   }
   componentDidMount() {
+    console.log(this.state.camera);
     this.interval = setInterval(() => {
       this.capture();
     }, 1000);
   }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+
+  //   componentWillUnmount() {
+  //     clearInterval(this.interval);
+  //   }
   setRef = (webcam) => {
     this.webcam = webcam;
   };
 
   capture = () => {
-    if (this.webcam) {
+    if (this.webcam && this.i <= 10) {
+      this.i = this.i + 1;
       const imageSrc = this.webcam.getScreenshot();
-      //console.log(imageSrc);
+      console.log(imageSrc);
+    } else {
+      this.setState({ camera: false });
+      this.i = 0;
     }
   };
   render() {
@@ -86,10 +93,13 @@ class Camera extends React.Component {
 
     return (
       <div className={styled.camDiv}>
-        <button onClick={() => this.setState({ camera: true })}>
+        <button
+          onClick={() => this.setState({ camera: true })}
+          className={styled.btn}
+        >
           Open camera
         </button>
-        <Modal active={this.state} setActive={() => this.setCam(false)}>
+        <Modal active={this.state.camera} setActive={() => this.setCam(false)}>
           {this.state.camera ? (
             <Webcam
               audio={false}
