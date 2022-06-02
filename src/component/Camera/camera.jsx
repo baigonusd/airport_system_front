@@ -48,10 +48,13 @@ import React, { useState } from "react";
 import Webcam from "react-webcam";
 import styled from "./camera.module.css";
 import Modal from "../Modal/Modal";
+import { setScrin } from "../../auth/actions/auth";
+import { connect } from "react-redux";
 
 class Camera extends React.Component {
   constructor(props) {
     super(props);
+    this.iin = props.iin;
     this.state = {
       camera: false,
     };
@@ -74,7 +77,8 @@ class Camera extends React.Component {
   capture = () => {
     if (this.webcam) {
       const imageSrc = this.webcam.getScreenshot();
-      console.log(imageSrc);
+
+      setScrin("020316601099", imageSrc);
     }
   };
   render() {
@@ -86,10 +90,12 @@ class Camera extends React.Component {
 
     return (
       <div className={styled.camDiv}>
-        <button onClick={() => this.setState({ camera: true })}>
-          Open camera
+        <button
+          onClick={() => this.setState({ camera: true })}
+          className={styled.btn}
+        >
+          Search
         </button>
-        <label>pose</label>
         <Modal active={this.state} setActive={() => this.setCam(false)}>
           {this.state.camera ? (
             <Webcam
@@ -107,4 +113,7 @@ class Camera extends React.Component {
     );
   }
 }
-export default Camera;
+const mapStateToProps = (state) => ({
+  iin: state.auth.iin,
+});
+export default connect(mapStateToProps, { setScrin })(Camera);
